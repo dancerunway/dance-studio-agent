@@ -370,9 +370,19 @@ let queue = [];
 let mediaItems = [];
 
 // ── CREDENTIALS ──────────────────────────────────────────────────────────────
+function extractToken(val) {
+  if (!val) return '';
+  const llt = val.match(/long_lived_token=([^&\s#]+)/);
+  if (llt) return llt[1];
+  const at = val.match(/access_token=([^&\s#]+)/);
+  if (at) return at[1];
+  return val.trim();
+}
 function saveCreds() {
   creds.anthropicKey = document.getElementById('anthropicKeyInput').value.trim();
-  creds.token = document.getElementById('tokenInput').value.trim();
+  const rawToken = document.getElementById('tokenInput').value.trim();
+  creds.token = extractToken(rawToken);
+  document.getElementById('tokenInput').value = creds.token;
   creds.igId  = document.getElementById('igIdInput').value.trim();
   creds.fbPageId = document.getElementById('fbPageIdInput').value.trim();
   creds.driveKey = document.getElementById('driveKeyInput').value.trim();
