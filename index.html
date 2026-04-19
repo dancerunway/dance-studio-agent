@@ -220,6 +220,7 @@ header h1 em{font-style:italic;color:var(--gold);}
   <input type="password" id="anthropicKeyInput" placeholder="Anthropic API Key (sk-ant-...)" style="max-width:220px" autocomplete="off">
   <span class="sl" style="margin-left:0.3rem">Meta API</span>
   <input type="text" id="tokenInput" placeholder="Page Access Token" autocomplete="off">
+  <input type="text" id="igTokenInput" placeholder="Instagram Token (from Generate token)" style="max-width:200px" autocomplete="off">
   <input type="text" id="igIdInput" placeholder="Instagram Account ID" style="max-width:145px">
   <input type="text" id="fbPageIdInput" placeholder="Facebook Page ID" style="max-width:130px">
   <button class="sbtn" onclick="saveCreds()">Save</button>
@@ -358,7 +359,7 @@ header h1 em{font-style:italic;color:var(--gold);}
 
 <script>
 // ── STATE ────────────────────────────────────────────────────────────────────
-let creds = { anthropicKey:'', token:'', igId:'', fbPageId:'', driveKey:'' };
+let creds = { anthropicKey:'', token:'', igToken:'', igId:'', fbPageId:'', driveKey:'' };
 let tone = 'Warm';
 let platforms = { ig:true, fb:true };
 let selectedMedia = null; // { id, name, thumbUrl, mimeType, isVideo }
@@ -383,6 +384,7 @@ function saveCreds() {
   const rawToken = document.getElementById('tokenInput').value.trim();
   creds.token = extractToken(rawToken);
   document.getElementById('tokenInput').value = creds.token;
+  creds.igToken = document.getElementById('igTokenInput').value.trim();
   creds.igId  = document.getElementById('igIdInput').value.trim();
   creds.fbPageId = document.getElementById('fbPageIdInput').value.trim();
   creds.driveKey = document.getElementById('driveKeyInput').value.trim();
@@ -396,6 +398,7 @@ function loadCreds() {
       creds = {...creds, ...JSON.parse(s)};
       document.getElementById('anthropicKeyInput').value = creds.anthropicKey || '';
       document.getElementById('tokenInput').value = creds.token;
+      document.getElementById('igTokenInput').value = creds.igToken || '';
       document.getElementById('igIdInput').value = creds.igId;
       document.getElementById('fbPageIdInput').value = creds.fbPageId;
       document.getElementById('driveKeyInput').value = creds.driveKey;
@@ -832,35 +835,47 @@ async function postNow(id) {
     } catch(e) { errors.push('Facebook: ' + e.message); }
   }
 
-  // INSTAGRAM (requires media)
+  // INSTAGRAM
   if (item.ig && creds.igId) {
-    if (!item.thumbUrl && !item.mediaId) {
-      errors.push('Instagram: No image/video available. Upload media via Meta Creator Studio for IG posts.');
-    } else {
-      try {
-        // Use public Drive download URL as image_url for IG container
-        const imageUrl = item.mediaId
-          ? `https://drive.google.com/uc?export=download&id=${item.mediaId}`
-          : null;
+    try {
+      const igTok = creds.igToken || creds.token;
+      if (!igTok) throw new Error('No Instagram token saved. Add it in the setup bar.');
 
-        const body = imageUrl
-          ? { caption: item.ig, image_url: imageUrl, access_token: creds.token }
-          : { caption: item.ig, access_token: creds.token };
+      // Build image URL from Google Drive (must be publicly accessible)
+      const imageUrl = item.mediaId
+        ? `https://drive.google.com/uc?export=view&id=${item.mediaId}`
+        : null;
 
-        const cRes = await fetch(`https://graph.facebook.com/v19.0/${creds.igId}/media`, {
-          method:'POST', headers:{'Content-Type':'application/json'},
-          body: JSON.stringify(body)
-        });
-        const c = await cRes.json();
-        if (c.error) throw new Error(c.error.message + '\n\nTip: Make sure the Drive folder is public and the image URL is accessible.');
+      if (!imageUrl) throw new Error('No image URL available. Instagram requires a photo or video.');
 
-        const pRes = await fetch(`https://graph.facebook.com/v19.0/${creds.igId}/media_publish`, {
-          method:'POST', headers:{'Content-Type':'application/json'},
-          body: JSON.stringify({ creation_id: c.id, access_token: creds.token })
-        });
-        const p = await pRes.json();
-        if (p.error) throw new Error(p.error.message);
-      } catch(e) { errors.push('Instagram: ' + e.message); }
+      // Step 1: Create media container
+      const containerBody = {
+        caption: item.ig,
+        image_url: imageUrl,
+        access_token: igTok
+      };
+      const cRes = await fetch(`https://graph.facebook.com/v21.0/${creds.igId}/media`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(containerBody)
+      });
+      const c = await cRes.json();
+      if (c.error) throw new Error(`Container error: ${c.error.message}`);
+      if (!c.id) throw new Error('No container ID returned from Instagram.');
+
+      // Step 2: Wait briefly for Instagram to process
+      await new Promise(r => setTimeout(r, 3000));
+
+      // Step 3: Publish the container
+      const pRes = await fetch(`https://graph.facebook.com/v21.0/${creds.igId}/media_publish`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ creation_id: c.id, access_token: igTok })
+      });
+      const p = await pRes.json();
+      if (p.error) throw new Error(`Publish error: ${p.error.message}`);
+    } catch(e) {
+      errors.push('Instagram: ' + (e.message || 'Unknown error'));
     }
   }
 
