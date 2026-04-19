@@ -854,15 +854,13 @@ async function postNow(id) {
         image_url: imageUrl,
         access_token: igTok
       };
-      // Use correct base URL depending on token type
-      const igBase = (igTok.startsWith('IGAAS') || igTok.startsWith('IGQ'))
-        ? 'https://graph.instagram.com/v21.0'
-        : 'https://graph.facebook.com/v21.0';
+      // Always use graph.facebook.com (CORS-safe) with the Facebook page token
+      const igTokToUse = creds.token; // Must be Facebook Page token, not Instagram token
 
-      const cRes = await fetch(`${igBase}/${creds.igId}/media`, {
+      const cRes = await fetch(`https://graph.facebook.com/v21.0/${creds.igId}/media`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(containerBody)
+        body: JSON.stringify({ ...containerBody, access_token: igTokToUse })
       });
       const c = await cRes.json();
       if (c.error) throw new Error(`Container error: ${c.error.message}`);
@@ -872,10 +870,10 @@ async function postNow(id) {
       await new Promise(r => setTimeout(r, 3000));
 
       // Step 3: Publish the container
-      const pRes = await fetch(`${igBase}/${creds.igId}/media_publish`, {
+      const pRes = await fetch(`https://graph.facebook.com/v21.0/${creds.igId}/media_publish`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ creation_id: c.id, access_token: igTok })
+        body: JSON.stringify({ creation_id: c.id, access_token: igTokToUse })
       });
       const p = await pRes.json();
       if (p.error) throw new Error(`Publish error: ${p.error.message}`);
