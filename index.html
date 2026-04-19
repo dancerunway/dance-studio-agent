@@ -854,7 +854,12 @@ async function postNow(id) {
         image_url: imageUrl,
         access_token: igTok
       };
-      const cRes = await fetch(`https://graph.facebook.com/v21.0/${creds.igId}/media`, {
+      // Use correct base URL depending on token type
+      const igBase = (igTok.startsWith('IGAAS') || igTok.startsWith('IGQ'))
+        ? 'https://graph.instagram.com/v21.0'
+        : 'https://graph.facebook.com/v21.0';
+
+      const cRes = await fetch(`${igBase}/${creds.igId}/media`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(containerBody)
@@ -867,7 +872,7 @@ async function postNow(id) {
       await new Promise(r => setTimeout(r, 3000));
 
       // Step 3: Publish the container
-      const pRes = await fetch(`https://graph.facebook.com/v21.0/${creds.igId}/media_publish`, {
+      const pRes = await fetch(`${igBase}/${creds.igId}/media_publish`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ creation_id: c.id, access_token: igTok })
