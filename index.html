@@ -299,6 +299,8 @@ header h1 em{font-style:italic;color:var(--gold);}
         <button class="chip ig active" onclick="togPlat('ig',this)">📸 IG</button>
         <button class="chip fb active" onclick="togPlat('fb',this)">👥 FB</button>
       </div>
+      <div class="opt-sep"></div>
+      <input type="text" id="schoolName" placeholder="School name" style="font-family:'DM Mono',monospace;font-size:0.6rem;background:var(--cream);border:1px solid var(--border);color:var(--ink);padding:0.3rem 0.6rem;border-radius:2px;outline:none;width:140px;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--border)'">
     </div>
 
     <!-- Phone mockup -->
@@ -467,86 +469,131 @@ function selectMedia(i) {
 
 // ── ANALYSE + GENERATE ───────────────────────────────────────────────────────
 async function analyseAndGenerate() {
+  // ── Pre-flight checks ──
   if (!selectedMedia) { alert('Please select a photo or video first.'); return; }
+
   const brief = document.getElementById('brief').value.trim();
   if (!brief) {
     const ta = document.getElementById('brief');
     ta.style.borderColor = 'var(--rust)';
-    setTimeout(() => ta.style.borderColor = '', 1500);
+    setTimeout(() => { ta.style.borderColor = ''; ta.placeholder = "Add a brief — e.g. 'This is from last Saturday's trial class...'"; }, 2000);
     ta.placeholder = '⚠ Please add a brief first';
+    return;
+  }
+
+  if (!creds.anthropicKey || !creds.anthropicKey.startsWith('sk-')) {
+    alert('⚠ Anthropic API key missing or invalid.\n\nPaste your key (starts with sk-ant-...) in the setup bar at the top and click Save All.');
     return;
   }
 
   setGenLoading(true);
 
-  const school = 'our dance studio';
+  const school = document.getElementById('schoolName')?.value?.trim() || 'our dance studio';
   let imageData = null;
-  let imageMime = null;
+  let imageMime = 'image/jpeg';
 
-  // Try to fetch image for vision analysis
+  // ── Try to load image for vision (silently skip if it fails) ──
   if (!selectedMedia.isVideo && selectedMedia.thumbUrl) {
     try {
-      // Use thumbnail for vision (Drive thumbnails are accessible)
-      const imgRes = await fetch(selectedMedia.thumbUrl);
-      const blob = await imgRes.blob();
-      imageData = await blobToBase64(blob);
-      imageMime = blob.type || 'image/jpeg';
+      const imgRes = await fetch(selectedMedia.thumbUrl, { mode: 'cors' });
+      if (imgRes.ok) {
+        const blob = await imgRes.blob();
+        if (blob.size > 0) {
+          imageData = await blobToBase64(blob);
+          imageMime = blob.type && blob.type.startsWith('image/') ? blob.type : 'image/jpeg';
+        }
+      }
     } catch(e) {
-      // Vision fetch failed, proceed without image
+      // Vision not available — fall back to text-only prompt, no error shown
     }
   }
 
+  // ── Build messages ──
+  let messages;
+  if (imageData) {
+    messages = [{
+      role: 'user',
+      content: [
+        { type: 'image', source: { type: 'base64', media_type: imageMime, data: imageData } },
+        { type: 'text', text: buildPrompt(brief, school, true) }
+      ]
+    }];
+  } else {
+    messages = [{ role: 'user', content: buildPrompt(brief, school, false, selectedMedia.name, selectedMedia.isVideo) }];
+  }
+
+  // ── Call API ──
   try {
-    let messages;
-    if (imageData) {
-      // With vision
-      messages = [{
-        role: 'user',
-        content: [
-          { type: 'image', source: { type: 'base64', media_type: imageMime, data: imageData } },
-          { type: 'text', text: buildPrompt(brief, school, true) }
-        ]
-      }];
-    } else {
-      // Without vision (video or fetch failed)
-      messages = [{ role: 'user', content: buildPrompt(brief, school, false, selectedMedia.name, selectedMedia.isVideo) }];
+    let res;
+    try {
+      res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': creds.anthropicKey,
+          'anthropic-version': '2023-06-01',
+          'anthropic-dangerous-direct-browser-access': 'true'
+        },
+        body: JSON.stringify({ model: 'claude-haiku-4-5', max_tokens: 1500, messages })
+      });
+    } catch(fetchErr) {
+      throw new Error('Network error — check your internet connection and try again.');
     }
 
-    if (!creds.anthropicKey) {
-      alert('Please add your Anthropic API Key in the setup bar and click Save All.');
-      setGenLoading(false);
-      return;
+    let data;
+    try {
+      data = await res.json();
+    } catch(jsonErr) {
+      throw new Error('Could not read API response. Please try again.');
     }
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': creds.anthropicKey,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
-      body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 1000, messages })
-    });
-    const data = await res.json();
-    if (data.error) throw new Error(data.error.message);
-    let text = (data.content?.[0]?.text || '').trim();
-    // Strip markdown fences
-    text = text.replace(/^```json\s*/i,'').replace(/^```\s*/,'').replace(/\s*```$/,'').trim();
-    // Extract JSON object if wrapped in extra text
+
+    // ── Handle API-level errors ──
+    if (data.error) {
+      const msg = data.error.message || 'Unknown API error';
+      if (msg.includes('credit') || msg.includes('balance')) {
+        throw new Error('Insufficient credits. Go to console.anthropic.com → Billing and add credits.');
+      } else if (msg.includes('invalid x-api-key') || msg.includes('authentication')) {
+        throw new Error('Invalid API key. Re-paste your key in the setup bar and click Save All.');
+      } else {
+        throw new Error(msg);
+      }
+    }
+
+    // ── Parse response ──
+    let text = '';
+    if (data.content && Array.isArray(data.content)) {
+      for (const block of data.content) {
+        if (block.type === 'text') { text = block.text; break; }
+      }
+    }
+    if (!text) throw new Error('Empty response from API. Please try again.');
+
+    // Strip markdown fences and find JSON
+    text = text.replace(/^```json\s*/im,'').replace(/^```\s*/m,'').replace(/```\s*$/m,'').trim();
     const jsonMatch = text.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) throw new Error('No JSON found in response. Raw: ' + text.substring(0,200));
-    const parsed = JSON.parse(jsonMatch[0]);
+    if (!jsonMatch) throw new Error('Caption generation failed — please try again.');
+
+    let parsed;
+    try {
+      parsed = JSON.parse(jsonMatch[0]);
+    } catch(parseErr) {
+      throw new Error('Caption format error — please try again.');
+    }
+
+    // ── Validate parsed output ──
+    if (!parsed.ig && !parsed.fb) throw new Error('No captions returned — please try again.');
 
     currentDraft = {
-      ig: (parsed.ig?.caption || '') + '\n\n' + (parsed.ig?.hashtags || ''),
-      fb: (parsed.fb?.caption || '') + '\n\n' + (parsed.fb?.hashtags || ''),
+      ig: [(parsed.ig?.caption || ''), (parsed.ig?.hashtags || '')].filter(Boolean).join('\n\n'),
+      fb: [(parsed.fb?.caption || ''), (parsed.fb?.hashtags || '')].filter(Boolean).join('\n\n'),
       analysis: parsed.analysis || ''
     };
 
     renderPreview();
     showApproval();
+
   } catch(e) {
-    alert('Generation failed: ' + e.message);
+    alert('❌ ' + (e.message || 'Something went wrong. Please try again.'));
   } finally {
     setGenLoading(false);
   }
