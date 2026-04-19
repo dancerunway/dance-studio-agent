@@ -216,12 +216,14 @@ header h1 em{font-style:italic;color:var(--gold);}
 </header>
 
 <div id="setupStrip">
-  <span class="sl">Meta API</span>
+  <span class="sl">Anthropic</span>
+  <input type="password" id="anthropicKeyInput" placeholder="Anthropic API Key (sk-ant-...)" style="max-width:220px" autocomplete="off">
+  <span class="sl" style="margin-left:0.3rem">Meta API</span>
   <input type="text" id="tokenInput" placeholder="Page Access Token" autocomplete="off">
   <input type="text" id="igIdInput" placeholder="Instagram Account ID" style="max-width:145px">
   <input type="text" id="fbPageIdInput" placeholder="Facebook Page ID" style="max-width:130px">
   <button class="sbtn" onclick="saveCreds()">Save</button>
-  <span class="sl" style="margin-left:0.5rem">Google Drive API Key</span>
+  <span class="sl" style="margin-left:0.3rem">Google Drive</span>
   <input type="text" id="driveKeyInput" placeholder="Google API Key" style="max-width:160px" autocomplete="off">
   <button class="sbtn" onclick="saveCreds()">Save All</button>
 </div>
@@ -354,7 +356,7 @@ header h1 em{font-style:italic;color:var(--gold);}
 
 <script>
 // ── STATE ────────────────────────────────────────────────────────────────────
-let creds = { token:'', igId:'', fbPageId:'', driveKey:'' };
+let creds = { anthropicKey:'', token:'', igId:'', fbPageId:'', driveKey:'' };
 let tone = 'Warm';
 let platforms = { ig:true, fb:true };
 let selectedMedia = null; // { id, name, thumbUrl, mimeType, isVideo }
@@ -367,6 +369,7 @@ let mediaItems = [];
 
 // ── CREDENTIALS ──────────────────────────────────────────────────────────────
 function saveCreds() {
+  creds.anthropicKey = document.getElementById('anthropicKeyInput').value.trim();
   creds.token = document.getElementById('tokenInput').value.trim();
   creds.igId  = document.getElementById('igIdInput').value.trim();
   creds.fbPageId = document.getElementById('fbPageIdInput').value.trim();
@@ -379,6 +382,7 @@ function loadCreds() {
     const s = localStorage.getItem('dsa_creds');
     if (s) {
       creds = {...creds, ...JSON.parse(s)};
+      document.getElementById('anthropicKeyInput').value = creds.anthropicKey || '';
       document.getElementById('tokenInput').value = creds.token;
       document.getElementById('igIdInput').value = creds.igId;
       document.getElementById('fbPageIdInput').value = creds.fbPageId;
@@ -508,9 +512,19 @@ async function analyseAndGenerate() {
       messages = [{ role: 'user', content: buildPrompt(brief, school, false, selectedMedia.name, selectedMedia.isVideo) }];
     }
 
+    if (!creds.anthropicKey) {
+      alert('Please add your Anthropic API Key in the setup bar and click Save All.');
+      setGenLoading(false);
+      return;
+    }
     const res = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': creds.anthropicKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
       body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 1000, messages })
     });
     const data = await res.json();
