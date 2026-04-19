@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dance Studio · Marketing Agent</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0e0c0a;
+  --cream: #f5f0e8;
+  --gold: #c9a84c;
+  --gold-dim: rgba(201,168,76,0.12);
+  --rust: #c45c2e;
+  --green: #4a8c5c;
+  --muted: #7a7060;
+  --surface: #faf7f2;
+  --border: #e0d8cc;
+  --ig: #e1306c;
+  --fb: #1877f2;
+  --panel: #f2ede3;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Mono',monospace;background:var(--cream);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;overflow:hidden;}
+
+/* ── HEADER ── */
+header{background:var(--ink);color:var(--cream);padding:0.9rem 1.8rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #222;flex-shrink:0;}
+header h1{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;letter-spacing:0.06em;}
+header h1 em{font-style:italic;color:var(--gold);}
+.hbadges{display:flex;gap:0.4rem;align-items:center;}
+.hbadge{font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.18rem 0.55rem;border-radius:2px;font-weight:500;}
+.hbadge.ig{background:var(--ig);color:#fff;}
+.hbadge.fb{background:var(--fb);color:#fff;}
+.hbadge.ok{background:var(--green);color:#fff;}
+.hbadge.off{background:#333;color:#888;}
+
+/* ── SETUP STRIP ── */
+#setupStrip{background:#161310;padding:0.7rem 1.8rem;display:flex;align-items:center;gap:0.7rem;flex-wrap:wrap;border-bottom:1px solid #2a2520;flex-shrink:0;}
+.sl{font-size:0.52rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);white-space:nowrap;}
+#setupStrip input{background:#2a2520;border:1px solid #3a3530;color:var(--cream);font-family:'DM Mono',monospace;font-size:0.62rem;padding:0.38rem 0.65rem;border-radius:2px;outline:none;flex:1;min-width:110px;}
+#setupStrip input:focus{border-color:var(--gold);}
+#setupStrip input::placeholder{color:#555;}
+.sbtn{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.38rem 0.9rem;border:1px solid var(--gold);background:transparent;color:var(--gold);cursor:pointer;border-radius:2px;white-space:nowrap;transition:all 0.15s;}
+.sbtn:hover{background:var(--gold);color:var(--ink);}
+
+/* ── MAIN LAYOUT ── */
+.app{display:grid;grid-template-columns:270px 1fr 300px;flex:1;overflow:hidden;height:calc(100vh - 96px);}
+
+/* ── LEFT PANEL ── */
+.left{border-right:1px solid var(--border);display:flex;flex-direction:column;background:var(--surface);overflow:hidden;}
+.panel-title{font-size:0.52rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);padding:0.9rem 1.3rem 0.5rem;border-bottom:1px solid var(--border);}
+
+/* Drive section */
+.drive-section{padding:1rem 1.3rem;border-bottom:1px solid var(--border);}
+.drive-label{font-size:0.52rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem;display:block;}
+.drive-input-row{display:flex;gap:0.4rem;}
+.drive-input-row input{flex:1;font-family:'DM Mono',monospace;font-size:0.62rem;background:var(--cream);border:1px solid var(--border);color:var(--ink);padding:0.42rem 0.6rem;border-radius:2px;outline:none;transition:border-color 0.15s;}
+.drive-input-row input:focus{border-color:var(--gold);}
+.scan-btn{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.08em;text-transform:uppercase;padding:0.42rem 0.7rem;border:1px solid var(--gold);background:transparent;color:var(--gold);cursor:pointer;border-radius:2px;white-space:nowrap;transition:all 0.15s;}
+.scan-btn:hover{background:var(--gold);color:var(--ink);}
+.scan-btn:disabled{opacity:0.4;cursor:not-allowed;}
+
+/* Media grid */
+.media-scroll{flex:1;overflow-y:auto;padding:0.8rem 1rem;}
+.media-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;}
+.media-thumb{border:2px solid var(--border);border-radius:3px;overflow:hidden;cursor:pointer;transition:all 0.15s;position:relative;background:#eee;aspect-ratio:1;}
+.media-thumb:hover{border-color:var(--gold);}
+.media-thumb.selected{border-color:var(--gold);box-shadow:0 0 0 2px var(--gold-dim);}
+.media-thumb img{width:100%;height:100%;object-fit:cover;display:block;}
+.media-thumb .vid-badge{position:absolute;bottom:4px;left:4px;background:rgba(0,0,0,0.65);color:#fff;font-size:0.45rem;letter-spacing:0.08em;padding:0.15rem 0.35rem;border-radius:2px;text-transform:uppercase;}
+.media-thumb .sel-check{position:absolute;top:4px;right:4px;width:16px;height:16px;background:var(--gold);border-radius:50%;display:none;align-items:center;justify-content:center;font-size:0.55rem;color:var(--ink);}
+.media-thumb.selected .sel-check{display:flex;}
+.media-empty{text-align:center;padding:2rem 1rem;color:var(--muted);font-size:0.58rem;line-height:1.8;opacity:0.7;}
+
+/* ── CENTRE ── */
+.centre{display:flex;flex-direction:column;overflow:hidden;background:var(--panel);}
+.centre-top{padding:0.9rem 1.4rem;border-bottom:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.ct-label{font-size:0.52rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);}
+.ptabs{display:flex;gap:0.3rem;}
+.ptab{font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.25rem 0.6rem;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;border-radius:2px;transition:all 0.15s;}
+.ptab.ig.active{background:var(--ig);color:#fff;border-color:var(--ig);}
+.ptab.fb.active{background:var(--fb);color:#fff;border-color:var(--fb);}
+
+/* Selected media preview */
+.selected-preview{flex-shrink:0;padding:1rem;border-bottom:1px solid var(--border);background:var(--surface);display:none;}
+.selected-preview.show{display:flex;gap:0.8rem;align-items:flex-start;}
+.sel-thumb{width:72px;height:72px;border-radius:3px;object-fit:cover;border:1px solid var(--border);flex-shrink:0;}
+.sel-info{flex:1;}
+.sel-filename{font-size:0.6rem;color:var(--ink);margin-bottom:0.25rem;word-break:break-all;}
+.sel-type{font-size:0.5rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);}
+.analyse-btn{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.35rem 0.8rem;border:1px solid var(--ink);background:var(--ink);color:var(--cream);cursor:pointer;border-radius:2px;margin-top:0.5rem;display:flex;align-items:center;gap:0.4rem;transition:all 0.15s;white-space:nowrap;}
+.analyse-btn:hover{background:var(--rust);border-color:var(--rust);}
+.analyse-btn:disabled{opacity:0.4;cursor:not-allowed;}
+
+/* Brief */
+.brief-section{padding:0.9rem 1.3rem;border-bottom:1px solid var(--border);background:var(--surface);flex-shrink:0;}
+.brief-row{display:flex;gap:0.5rem;align-items:flex-end;}
+.brief-section textarea{flex:1;font-family:'DM Mono',monospace;font-size:0.65rem;background:var(--cream);border:1px solid var(--border);color:var(--ink);padding:0.5rem 0.7rem;border-radius:2px;resize:none;outline:none;transition:border-color 0.15s;line-height:1.6;}
+.brief-section textarea:focus{border-color:var(--gold);}
+.gen-btn{font-family:'Cormorant Garamond',serif;font-size:0.95rem;font-weight:400;letter-spacing:0.08em;padding:0.5rem 1rem;border:none;background:var(--ink);color:var(--cream);cursor:pointer;border-radius:2px;transition:all 0.2s;white-space:nowrap;display:flex;align-items:center;gap:0.4rem;align-self:stretch;}
+.gen-btn:hover{background:var(--rust);}
+.gen-btn:disabled{opacity:0.4;cursor:not-allowed;}
+
+/* Tone + platform row */
+.options-row{padding:0.65rem 1.3rem;border-bottom:1px solid var(--border);background:var(--surface);display:flex;align-items:center;gap:1rem;flex-shrink:0;}
+.chip-row{display:flex;gap:0.3rem;flex-wrap:wrap;}
+.chip{font-family:'DM Mono',monospace;font-size:0.52rem;padding:0.2rem 0.45rem;border:1px solid var(--border);background:var(--cream);color:var(--muted);cursor:pointer;border-radius:2px;transition:all 0.15s;}
+.chip:hover{border-color:var(--ink);color:var(--ink);}
+.chip.active{background:var(--ink);color:var(--cream);border-color:var(--ink);}
+.chip.ig.active{background:var(--ig);border-color:var(--ig);color:#fff;}
+.chip.fb.active{background:var(--fb);border-color:var(--fb);color:#fff;}
+.opt-sep{width:1px;height:20px;background:var(--border);}
+.opt-label{font-size:0.5rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-right:0.2rem;}
+
+/* Phone preview */
+.preview-scroll{flex:1;overflow-y:auto;padding:1.2rem;display:flex;align-items:flex-start;justify-content:center;}
+.phone{width:290px;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 16px 50px rgba(0,0,0,0.14);font-family:-apple-system,sans-serif;}
+.ph-head{padding:0.6rem 0.85rem;display:flex;align-items:center;gap:0.55rem;border-bottom:1px solid #f0f0f0;}
+.ph-avatar{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);display:flex;align-items:center;justify-content:center;color:#fff;font-size:0.7rem;font-weight:700;}
+.ph-avatar.fb{background:var(--fb);border-radius:6px;}
+.ph-name{font-size:0.68rem;font-weight:700;color:#111;}
+.ph-sub{font-size:0.52rem;color:#999;display:block;}
+.ph-img{width:100%;aspect-ratio:1;object-fit:cover;display:block;background:#f5f5f5;}
+.ph-img-placeholder{width:100%;aspect-ratio:1;background:linear-gradient(135deg,#f0f0f020,#e0e0e040);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.4rem;color:#ccc;font-size:0.62rem;letter-spacing:0.08em;font-style:italic;border-bottom:1px solid #f0f0f0;}
+.ph-body{padding:0.7rem 0.85rem;}
+.ph-caption{font-size:0.68rem;line-height:1.65;color:#222;white-space:pre-wrap;}
+.ph-tags{font-size:0.63rem;color:#3897f0;margin-top:0.35rem;line-height:1.7;}
+.empty-ph{display:flex;flex-direction:column;align-items:center;justify-content:center;height:300px;gap:0.6rem;color:var(--muted);opacity:0.45;}
+.empty-ph .ei{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:2rem;color:var(--gold);}
+.empty-ph p{font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;}
+
+/* ── RIGHT PANEL ── */
+.right{border-left:1px solid var(--border);display:flex;flex-direction:column;background:var(--surface);overflow:hidden;}
+.right-head{padding:0.8rem 1.2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.rh-title{font-size:0.52rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);}
+.qbadge{background:var(--gold);color:var(--ink);font-size:0.5rem;padding:0.1rem 0.4rem;border-radius:10px;font-weight:600;}
+
+/* Approval card */
+.approval-area{flex-shrink:0;border-bottom:1px solid var(--border);padding:0.9rem 1.1rem;display:none;}
+.approval-area.show{display:block;}
+.approval-title{font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0.6rem;}
+.caption-tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:0.6rem;}
+.ctab{font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.35rem 0.65rem;border:none;background:transparent;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;transition:all 0.12s;margin-bottom:-1px;}
+.ctab.ig.active{color:var(--ig);border-bottom-color:var(--ig);}
+.ctab.fb.active{color:var(--fb);border-bottom-color:var(--fb);}
+.cap-edit{width:100%;font-family:'DM Mono',monospace;font-size:0.6rem;background:var(--cream);border:1px solid var(--border);color:var(--ink);padding:0.5rem 0.65rem;border-radius:2px;resize:none;outline:none;line-height:1.65;transition:border-color 0.15s;min-height:90px;}
+.cap-edit:focus{border-color:var(--gold);}
+
+/* Time slot */
+.slot-row{display:flex;gap:0.35rem;margin:0.6rem 0;}
+.slot-chip{font-family:'DM Mono',monospace;font-size:0.5rem;padding:0.22rem 0.5rem;border:1px solid var(--border);background:var(--cream);color:var(--muted);cursor:pointer;border-radius:2px;transition:all 0.15s;}
+.slot-chip:hover{border-color:var(--gold);color:var(--gold);}
+.slot-chip.active{background:var(--gold);color:var(--ink);border-color:var(--gold);}
+
+.approval-actions{display:flex;gap:0.4rem;margin-top:0.6rem;}
+.aact{flex:1;font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.08em;text-transform:uppercase;padding:0.4rem;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;border-radius:2px;transition:all 0.15s;}
+.aact.approve{border-color:var(--green);color:var(--green);}
+.aact.approve:hover{background:var(--green);color:#fff;}
+.aact.skip:hover{border-color:var(--rust);color:var(--rust);}
+
+/* Queue list */
+.queue-scroll{flex:1;overflow-y:auto;}
+.queue-empty{padding:1.5rem 1.2rem;text-align:center;color:var(--muted);font-size:0.56rem;opacity:0.6;line-height:1.9;}
+.qi{border-bottom:1px solid var(--border);padding:0.75rem 1.1rem;animation:fadeUp 0.2s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:translateY(0);}}
+.qi-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:0.35rem;}
+.qi-plats{display:flex;gap:0.25rem;}
+.qip{font-size:0.44rem;padding:0.1rem 0.35rem;border-radius:2px;text-transform:uppercase;letter-spacing:0.08em;font-weight:600;}
+.qip.ig{background:#fce4ec;color:var(--ig);}
+.qip.fb{background:#e3f2fd;color:var(--fb);}
+.qi-del{background:none;border:none;color:var(--muted);cursor:pointer;font-size:0.65rem;padding:0;transition:color 0.1s;line-height:1;}
+.qi-del:hover{color:var(--rust);}
+.qi-cap{font-size:0.57rem;line-height:1.6;color:var(--ink);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:0.35rem;}
+.qi-meta{display:flex;align-items:center;justify-content:space-between;}
+.qi-time{font-size:0.5rem;color:var(--gold);}
+.qi-stat{font-size:0.44rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.1rem 0.4rem;border-radius:2px;}
+.qi-stat.queued{background:rgba(201,168,76,0.15);color:var(--gold);}
+.qi-stat.posted{background:rgba(74,140,92,0.15);color:var(--green);}
+.qi-stat.failed{background:rgba(196,92,46,0.15);color:var(--rust);}
+.qi-stat.posting{background:rgba(201,168,76,0.15);color:var(--gold);}
+.post-btn{width:100%;margin-top:0.45rem;font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.35rem;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;border-radius:2px;transition:all 0.15s;display:flex;align-items:center;justify-content:center;gap:0.35rem;}
+.post-btn:hover:not(:disabled){border-color:var(--green);color:var(--green);}
+.post-btn:disabled{opacity:0.4;cursor:not-allowed;}
+
+/* AI analysis badge */
+.ai-analysis{background:var(--gold-dim);border:1px solid rgba(201,168,76,0.3);border-radius:3px;padding:0.5rem 0.7rem;margin-bottom:0.6rem;font-size:0.58rem;line-height:1.6;color:var(--ink);display:none;}
+.ai-analysis.show{display:block;}
+.ai-analysis .ai-label{font-size:0.45rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:0.3rem;display:block;}
+
+/* Spinner */
+.sp{display:inline-block;width:12px;height:12px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;}
+.sp.dark{border-color:rgba(14,12,10,0.2);border-top-color:var(--ink);}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* Cred footer */
+.cred-foot{padding:0.5rem 1.1rem;border-top:1px solid var(--border);display:flex;align-items:center;gap:0.4rem;flex-shrink:0;}
+.cdot{width:6px;height:6px;border-radius:50%;background:#444;}
+.cdot.ok{background:var(--green);}
+.cfoot-label{font-size:0.5rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Dance Studio <em>Marketing</em> Agent</h1>
+  <div class="hbadges">
+    <span class="hbadge ig">IG</span>
+    <span class="hbadge fb">FB</span>
+    <span class="hbadge off" id="connBadge">Not Connected</span>
+  </div>
+</header>
+
+<div id="setupStrip">
+  <span class="sl">Meta API</span>
+  <input type="text" id="tokenInput" placeholder="Page Access Token" autocomplete="off">
+  <input type="text" id="igIdInput" placeholder="Instagram Account ID" style="max-width:145px">
+  <input type="text" id="fbPageIdInput" placeholder="Facebook Page ID" style="max-width:130px">
+  <button class="sbtn" onclick="saveCreds()">Save</button>
+  <span class="sl" style="margin-left:0.5rem">Google Drive API Key</span>
+  <input type="text" id="driveKeyInput" placeholder="Google API Key" style="max-width:160px" autocomplete="off">
+  <button class="sbtn" onclick="saveCreds()">Save All</button>
+</div>
+
+<div class="app">
+
+  <!-- ── LEFT: MEDIA BROWSER ── -->
+  <div class="left">
+    <div class="panel-title">📁 Google Drive Media</div>
+    <div class="drive-section">
+      <span class="drive-label">Folder ID</span>
+      <div class="drive-input-row">
+        <input type="text" id="folderId" placeholder="Paste Drive Folder ID">
+        <button class="scan-btn" id="scanBtn" onclick="scanDrive()">Scan</button>
+      </div>
+    </div>
+    <div class="media-scroll">
+      <div id="mediaGrid" class="media-grid">
+        <div class="media-empty" style="grid-column:1/-1">
+          Paste your Google Drive folder ID above and click Scan to load your photos and videos.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CENTRE: COMPOSE + PREVIEW ── -->
+  <div class="centre">
+    <div class="centre-top">
+      <span class="ct-label">Post Preview</span>
+      <div class="ptabs">
+        <button class="ptab ig active" onclick="switchPrev(this,'ig')">Instagram</button>
+        <button class="ptab fb" onclick="switchPrev(this,'fb')">Facebook</button>
+      </div>
+    </div>
+
+    <!-- Selected media info -->
+    <div class="selected-preview" id="selPreview">
+      <img class="sel-thumb" id="selThumb" src="" alt="">
+      <div class="sel-info">
+        <div class="sel-filename" id="selFilename">—</div>
+        <div class="sel-type" id="selType">—</div>
+        <button class="analyse-btn" id="analyseBtn" onclick="analyseAndGenerate()">
+          <span id="anlText">✦ Analyse &amp; Write Caption</span>
+          <span class="sp" id="anlSp" style="display:none"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Brief -->
+    <div class="brief-section">
+      <div class="brief-row">
+        <textarea id="brief" rows="2" placeholder="Add a brief — e.g. 'This is from last Saturday's trial class. Promote our June intake, $25 first session.'"></textarea>
+        <button class="gen-btn" id="genBtn" onclick="analyseAndGenerate()" disabled>
+          <span id="genTxt">Generate</span>
+          <span class="sp" id="genSp" style="display:none;border-top-color:var(--cream);"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Options -->
+    <div class="options-row">
+      <span class="opt-label">Tone</span>
+      <div class="chip-row">
+        <button class="chip active" onclick="selChip(this,'tone')">Warm</button>
+        <button class="chip" onclick="selChip(this,'tone')">Energetic</button>
+        <button class="chip" onclick="selChip(this,'tone')">Elegant</button>
+        <button class="chip" onclick="selChip(this,'tone')">Urgent</button>
+        <button class="chip" onclick="selChip(this,'tone')">Playful</button>
+      </div>
+      <div class="opt-sep"></div>
+      <span class="opt-label">Post to</span>
+      <div class="chip-row">
+        <button class="chip ig active" onclick="togPlat('ig',this)">📸 IG</button>
+        <button class="chip fb active" onclick="togPlat('fb',this)">👥 FB</button>
+      </div>
+    </div>
+
+    <!-- Phone mockup -->
+    <div class="preview-scroll" id="previewScroll">
+      <div class="empty-ph">
+        <div class="ei">✦</div>
+        <p>Select media then generate a post</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── RIGHT: APPROVAL + QUEUE ── -->
+  <div class="right">
+    <div class="right-head">
+      <span class="rh-title">Approval &amp; Queue</span>
+      <span class="qbadge" id="qcount">0</span>
+    </div>
+
+    <!-- Approval card -->
+    <div class="approval-area" id="approvalArea">
+      <div class="approval-title">✦ Review &amp; Approve</div>
+
+      <div class="ai-analysis" id="aiAnalysis">
+        <span class="ai-label">Claude's read on this image</span>
+        <span id="aiAnalysisText"></span>
+      </div>
+
+      <div class="caption-tabs" id="capTabs"></div>
+      <textarea class="cap-edit" id="igCapEdit" placeholder="Instagram caption..."></textarea>
+      <textarea class="cap-edit" id="fbCapEdit" placeholder="Facebook caption..." style="display:none"></textarea>
+
+      <div class="slot-row">
+        <button class="slot-chip active" onclick="selSlot(this,'07:00')">7 AM</button>
+        <button class="slot-chip" onclick="selSlot(this,'12:00')">12 PM</button>
+        <button class="slot-chip" onclick="selSlot(this,'21:00')">9 PM</button>
+      </div>
+
+      <div class="approval-actions">
+        <button class="aact skip" onclick="skipDraft()">✕ Skip</button>
+        <button class="aact approve" onclick="approveToQueue()">✓ Add to Queue</button>
+      </div>
+    </div>
+
+    <!-- Queue -->
+    <div class="queue-scroll" id="queueScroll">
+      <div class="queue-empty">Approved posts appear here.<br>Hit Post Now when you're ready.</div>
+    </div>
+
+    <div class="cred-foot">
+      <div class="cdot" id="cdot"></div>
+      <span class="cfoot-label" id="cfoot">No credentials saved</span>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── STATE ────────────────────────────────────────────────────────────────────
+let creds = { token:'', igId:'', fbPageId:'', driveKey:'' };
+let tone = 'Warm';
+let platforms = { ig:true, fb:true };
+let selectedMedia = null; // { id, name, thumbUrl, mimeType, isVideo }
+let currentDraft = { ig:'', fb:'', analysis:'' };
+let selectedSlot = '07:00';
+let activeCaptionTab = 'ig';
+let prevPlatform = 'ig';
+let queue = [];
+let mediaItems = [];
+
+// ── CREDENTIALS ──────────────────────────────────────────────────────────────
+function saveCreds() {
+  creds.token = document.getElementById('tokenInput').value.trim();
+  creds.igId  = document.getElementById('igIdInput').value.trim();
+  creds.fbPageId = document.getElementById('fbPageIdInput').value.trim();
+  creds.driveKey = document.getElementById('driveKeyInput').value.trim();
+  try { localStorage.setItem('dsa_creds', JSON.stringify(creds)); } catch(e){}
+  updateCredUI();
+}
+function loadCreds() {
+  try {
+    const s = localStorage.getItem('dsa_creds');
+    if (s) {
+      creds = {...creds, ...JSON.parse(s)};
+      document.getElementById('tokenInput').value = creds.token;
+      document.getElementById('igIdInput').value = creds.igId;
+      document.getElementById('fbPageIdInput').value = creds.fbPageId;
+      document.getElementById('driveKeyInput').value = creds.driveKey;
+    }
+  } catch(e){}
+  updateCredUI();
+}
+function updateCredUI() {
+  const ok = !!creds.token;
+  document.getElementById('cdot').className = 'cdot' + (ok?' ok':'');
+  document.getElementById('cfoot').textContent = ok ? 'Token saved · ready to post' : 'No credentials saved';
+  document.getElementById('connBadge').textContent = ok ? 'Connected' : 'Not Connected';
+  document.getElementById('connBadge').className = 'hbadge ' + (ok?'ok':'off');
+}
+
+// ── GOOGLE DRIVE SCAN ────────────────────────────────────────────────────────
+async function scanDrive() {
+  const folderId = document.getElementById('folderId').value.trim();
+  if (!folderId) { alert('Please paste your Google Drive Folder ID.'); return; }
+  if (!creds.driveKey) { alert('Please add your Google API Key in the setup bar.'); return; }
+
+  const btn = document.getElementById('scanBtn');
+  btn.disabled = true; btn.textContent = '…';
+
+  try {
+    const q = encodeURIComponent(`'${folderId}' in parents and (mimeType contains 'image/' or mimeType contains 'video/') and trashed=false`);
+    const url = `https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name,mimeType,thumbnailLink,webContentLink)&key=${creds.driveKey}&pageSize=50`;
+    const res = await fetch(url);
+    const data = await res.json();
+    if (data.error) throw new Error(data.error.message);
+
+    mediaItems = (data.files || []).map(f => ({
+      id: f.id,
+      name: f.name,
+      mimeType: f.mimeType,
+      isVideo: f.mimeType.startsWith('video/'),
+      thumbUrl: f.thumbnailLink || null,
+      webUrl: f.webContentLink || null
+    }));
+
+    renderMediaGrid();
+  } catch(e) {
+    alert('Drive scan failed: ' + e.message + '\n\nMake sure:\n1. Your API key has Drive API enabled\n2. The folder is shared publicly (Anyone with link can view)\n3. Folder ID is correct');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Scan';
+  }
+}
+
+function renderMediaGrid() {
+  const grid = document.getElementById('mediaGrid');
+  if (!mediaItems.length) {
+    grid.innerHTML = '<div class="media-empty" style="grid-column:1/-1">No images or videos found in this folder.</div>';
+    return;
+  }
+  grid.innerHTML = mediaItems.map((m,i) => `
+    <div class="media-thumb" id="mt-${i}" onclick="selectMedia(${i})">
+      ${m.thumbUrl
+        ? `<img src="${m.thumbUrl}" alt="${escH(m.name)}" loading="lazy">`
+        : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">${m.isVideo?'🎬':'🖼️'}</div>`
+      }
+      ${m.isVideo ? `<span class="vid-badge">Video</span>` : ''}
+      <div class="sel-check">✓</div>
+    </div>`).join('');
+}
+
+function selectMedia(i) {
+  const m = mediaItems[i];
+  selectedMedia = m;
+
+  document.querySelectorAll('.media-thumb').forEach(t => t.classList.remove('selected'));
+  document.getElementById('mt-' + i).classList.add('selected');
+
+  const sp = document.getElementById('selPreview');
+  sp.classList.add('show');
+  document.getElementById('selThumb').src = m.thumbUrl || '';
+  document.getElementById('selThumb').style.display = m.thumbUrl ? 'block' : 'none';
+  document.getElementById('selFilename').textContent = m.name;
+  document.getElementById('selType').textContent = (m.isVideo ? 'Video' : 'Image') + ' · ' + m.mimeType;
+  document.getElementById('genBtn').disabled = false;
+}
+
+// ── ANALYSE + GENERATE ───────────────────────────────────────────────────────
+async function analyseAndGenerate() {
+  if (!selectedMedia) { alert('Please select a photo or video first.'); return; }
+  const brief = document.getElementById('brief').value.trim();
+  if (!brief) {
+    const ta = document.getElementById('brief');
+    ta.style.borderColor = 'var(--rust)';
+    setTimeout(() => ta.style.borderColor = '', 1500);
+    ta.placeholder = '⚠ Please add a brief first';
+    return;
+  }
+
+  setGenLoading(true);
+
+  const school = 'our dance studio';
+  let imageData = null;
+  let imageMime = null;
+
+  // Try to fetch image for vision analysis
+  if (!selectedMedia.isVideo && selectedMedia.thumbUrl) {
+    try {
+      // Use thumbnail for vision (Drive thumbnails are accessible)
+      const imgRes = await fetch(selectedMedia.thumbUrl);
+      const blob = await imgRes.blob();
+      imageData = await blobToBase64(blob);
+      imageMime = blob.type || 'image/jpeg';
+    } catch(e) {
+      // Vision fetch failed, proceed without image
+    }
+  }
+
+  try {
+    let messages;
+    if (imageData) {
+      // With vision
+      messages = [{
+        role: 'user',
+        content: [
+          { type: 'image', source: { type: 'base64', media_type: imageMime, data: imageData } },
+          { type: 'text', text: buildPrompt(brief, school, true) }
+        ]
+      }];
+    } else {
+      // Without vision (video or fetch failed)
+      messages = [{ role: 'user', content: buildPrompt(brief, school, false, selectedMedia.name, selectedMedia.isVideo) }];
+    }
+
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 1000, messages })
+    });
+    const data = await res.json();
+    let text = (data.content?.[0]?.text || '').replace(/```json|```/g,'').trim();
+    const parsed = JSON.parse(text);
+
+    currentDraft = {
+      ig: parsed.ig.caption + '\n\n' + parsed.ig.hashtags,
+      fb: parsed.fb.caption + '\n\n' + parsed.fb.hashtags,
+      analysis: parsed.analysis || ''
+    };
+
+    renderPreview();
+    showApproval();
+  } catch(e) {
+    alert('Generation failed: ' + e.message);
+  } finally {
+    setGenLoading(false);
+  }
+}
+
+function buildPrompt(brief, school, hasImage, filename, isVideo) {
+  const mediaContext = hasImage
+    ? 'I am showing you an image from our dance school.'
+    : isVideo
+      ? `This post is for a video called "${filename}" from our dance school. Imagine dynamic movement and energy.`
+      : `This post is for a photo called "${filename}" from our dance school.`;
+
+  return `You are a social media manager for a dance school called "${school}".
+${mediaContext}
+
+Campaign brief: ${brief}
+Tone: ${tone}
+Audience: Parents and families in Singapore
+
+${hasImage ? 'First, briefly describe what you see in the image (1-2 sentences). Then write the posts.' : ''}
+
+Return ONLY valid JSON (no preamble, no markdown backticks):
+{
+  "analysis": "${hasImage ? 'Your 1-2 sentence description of the image' : ''}",
+  "ig": {
+    "caption": "Instagram caption with emojis and line breaks, 80-150 words, strong CTA",
+    "hashtags": "#dance #danceschool #singapore #kidsactivities #dancekids #ballet"
+  },
+  "fb": {
+    "caption": "Facebook post, warmer, 100-200 words, parent-focused CTA, emojis",
+    "hashtags": "#dance #danceschool #singapore #kidsactivities"
+  }
+}`;
+}
+
+function blobToBase64(blob) {
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result.split(',')[1]);
+    r.onerror = rej;
+    r.readAsDataURL(blob);
+  });
+}
+
+// ── PREVIEW ──────────────────────────────────────────────────────────────────
+function renderPreview() {
+  const area = document.getElementById('previewScroll');
+  const text = currentDraft[prevPlatform] || '';
+  const parts = text.split('\n\n');
+  const hashtags = parts[parts.length-1];
+  const caption = parts.slice(0,-1).join('\n\n');
+  const school = 'Dance Studio';
+  const initial = school.charAt(0);
+  const isIg = prevPlatform === 'ig';
+  const slotMap = {'07:00':'7:00 AM','12:00':'12:00 PM','21:00':'9:00 PM'};
+
+  area.innerHTML = `
+    <div class="phone">
+      <div class="ph-head">
+        <div class="ph-avatar ${isIg?'':'fb'}">${initial}</div>
+        <div>
+          <div class="ph-name">${school}</div>
+          <span class="ph-sub">Queued · ${slotMap[selectedSlot]} SGT</span>
+        </div>
+      </div>
+      ${selectedMedia?.thumbUrl && !selectedMedia.isVideo
+        ? `<img class="ph-img" src="${selectedMedia.thumbUrl}" alt="">`
+        : selectedMedia?.isVideo
+          ? `<div class="ph-img-placeholder">🎬<br>Video post</div>`
+          : `<div class="ph-img-placeholder">📸<br>No image selected</div>`
+      }
+      <div class="ph-body">
+        <div class="ph-caption">${escH(caption)}</div>
+        <div class="ph-tags">${escH(hashtags)}</div>
+      </div>
+    </div>`;
+}
+
+function switchPrev(btn, plat) {
+  document.querySelectorAll('.ptab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  prevPlatform = plat;
+  if (currentDraft.ig || currentDraft.fb) renderPreview();
+}
+
+// ── APPROVAL ─────────────────────────────────────────────────────────────────
+function showApproval() {
+  const area = document.getElementById('approvalArea');
+  area.classList.add('show');
+
+  // AI analysis
+  const analysisEl = document.getElementById('aiAnalysis');
+  if (currentDraft.analysis) {
+    analysisEl.classList.add('show');
+    document.getElementById('aiAnalysisText').textContent = currentDraft.analysis;
+  } else {
+    analysisEl.classList.remove('show');
+  }
+
+  document.getElementById('igCapEdit').value = currentDraft.ig;
+  document.getElementById('fbCapEdit').value = currentDraft.fb;
+  buildCapTabs();
+}
+
+function buildCapTabs() {
+  const tabs = document.getElementById('capTabs');
+  tabs.innerHTML = '';
+  if (platforms.ig) {
+    const b = document.createElement('button');
+    b.className = 'ctab ig' + (activeCaptionTab==='ig'?' active':'');
+    b.textContent = 'Instagram';
+    b.onclick = () => switchCapTab('ig');
+    tabs.appendChild(b);
+  }
+  if (platforms.fb) {
+    const b = document.createElement('button');
+    b.className = 'ctab fb' + (activeCaptionTab==='fb'?' active':'');
+    b.textContent = 'Facebook';
+    b.onclick = () => switchCapTab('fb');
+    tabs.appendChild(b);
+  }
+  switchCapTab(activeCaptionTab);
+}
+
+function switchCapTab(plat) {
+  activeCaptionTab = plat;
+  document.querySelectorAll('.ctab').forEach(t => t.classList.remove('active'));
+  const a = document.querySelector('.ctab.' + plat);
+  if (a) a.classList.add('active');
+  document.getElementById('igCapEdit').style.display = plat==='ig'?'block':'none';
+  document.getElementById('fbCapEdit').style.display = plat==='fb'?'block':'none';
+}
+
+function selSlot(btn, time) {
+  document.querySelectorAll('.slot-chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  selectedSlot = time;
+  if (currentDraft.ig || currentDraft.fb) renderPreview();
+}
+
+function skipDraft() {
+  currentDraft = { ig:'', fb:'', analysis:'' };
+  document.getElementById('approvalArea').classList.remove('show');
+  document.getElementById('previewScroll').innerHTML = `<div class="empty-ph"><div class="ei">✦</div><p>Select media then generate a post</p></div>`;
+}
+
+function approveToQueue() {
+  const igText = document.getElementById('igCapEdit').value.trim();
+  const fbText = document.getElementById('fbCapEdit').value.trim();
+  if (!igText && !fbText) return;
+
+  const slotMap = {'07:00':'7:00 AM','12:00':'12:00 PM','21:00':'9:00 PM'};
+  queue.push({
+    id: Date.now(),
+    ig: platforms.ig ? igText : '',
+    fb: platforms.fb ? fbText : '',
+    slot: selectedSlot,
+    slotLabel: slotMap[selectedSlot],
+    status: 'queued',
+    thumbUrl: selectedMedia?.thumbUrl || null,
+    mediaId: selectedMedia?.id || null,
+    isVideo: selectedMedia?.isVideo || false
+  });
+
+  renderQueue();
+  document.getElementById('approvalArea').classList.remove('show');
+  currentDraft = { ig:'', fb:'', analysis:'' };
+}
+
+// ── QUEUE ─────────────────────────────────────────────────────────────────────
+function renderQueue() {
+  const scroll = document.getElementById('queueScroll');
+  document.getElementById('qcount').textContent = queue.length;
+  if (!queue.length) {
+    scroll.innerHTML = '<div class="queue-empty">Approved posts appear here.<br>Hit Post Now when you\'re ready.</div>';
+    return;
+  }
+  scroll.innerHTML = queue.map(item => `
+    <div class="qi" id="qi-${item.id}">
+      <div class="qi-top">
+        <div class="qi-plats">
+          ${item.ig?'<span class="qip ig">IG</span>':''}
+          ${item.fb?'<span class="qip fb">FB</span>':''}
+        </div>
+        <button class="qi-del" onclick="removeQ(${item.id})">✕</button>
+      </div>
+      <div class="qi-cap">${escH((item.ig||item.fb).substring(0,120))}${(item.ig||item.fb).length>120?'…':''}</div>
+      <div class="qi-meta">
+        <span class="qi-time">⏰ ${item.slotLabel} SGT</span>
+        <span class="qi-stat ${item.status}" id="qst-${item.id}">${item.status}</span>
+      </div>
+      <button class="post-btn" id="pb-${item.id}" onclick="postNow(${item.id})" ${item.status==='posted'?'disabled':''}>
+        <span id="pbt-${item.id}">${item.status==='posted'?'✓ Posted':'▶ Post Now'}</span>
+      </button>
+    </div>`).join('');
+}
+
+function removeQ(id) {
+  queue = queue.filter(q => q.id !== id);
+  renderQueue();
+}
+
+// ── POST ──────────────────────────────────────────────────────────────────────
+async function postNow(id) {
+  if (!creds.token) { alert('Please save your Page Access Token first.'); return; }
+  const item = queue.find(q => q.id === id);
+  if (!item) return;
+
+  const pb = document.getElementById('pb-'+id);
+  const pt = document.getElementById('pbt-'+id);
+  if (pb) pb.disabled = true;
+  if (pt) pt.textContent = 'Posting…';
+  setQstat(id, 'posting');
+
+  const errors = [];
+
+  // FACEBOOK
+  if (item.fb && creds.fbPageId) {
+    try {
+      const r = await fetch(`https://graph.facebook.com/v19.0/${creds.fbPageId}/feed`, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ message: item.fb, access_token: creds.token })
+      });
+      const d = await r.json();
+      if (d.error) throw new Error(d.error.message);
+    } catch(e) { errors.push('Facebook: ' + e.message); }
+  }
+
+  // INSTAGRAM (requires media)
+  if (item.ig && creds.igId) {
+    if (!item.thumbUrl && !item.mediaId) {
+      errors.push('Instagram: No image/video available. Upload media via Meta Creator Studio for IG posts.');
+    } else {
+      try {
+        // Use public Drive download URL as image_url for IG container
+        const imageUrl = item.mediaId
+          ? `https://drive.google.com/uc?export=download&id=${item.mediaId}`
+          : null;
+
+        const body = imageUrl
+          ? { caption: item.ig, image_url: imageUrl, access_token: creds.token }
+          : { caption: item.ig, access_token: creds.token };
+
+        const cRes = await fetch(`https://graph.facebook.com/v19.0/${creds.igId}/media`, {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify(body)
+        });
+        const c = await cRes.json();
+        if (c.error) throw new Error(c.error.message + '\n\nTip: Make sure the Drive folder is public and the image URL is accessible.');
+
+        const pRes = await fetch(`https://graph.facebook.com/v19.0/${creds.igId}/media_publish`, {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ creation_id: c.id, access_token: creds.token })
+        });
+        const p = await pRes.json();
+        if (p.error) throw new Error(p.error.message);
+      } catch(e) { errors.push('Instagram: ' + e.message); }
+    }
+  }
+
+  if (errors.length) {
+    setQstat(id, 'failed');
+    if (pb) pb.disabled = false;
+    if (pt) pt.textContent = '↺ Retry';
+    alert('⚠️ Post error:\n\n' + errors.join('\n\n'));
+    const qi = queue.find(q => q.id === id);
+    if (qi) qi.status = 'failed';
+  } else {
+    setQstat(id, 'posted');
+    if (pt) pt.textContent = '✓ Posted';
+    const qi = queue.find(q => q.id === id);
+    if (qi) qi.status = 'posted';
+  }
+}
+
+function setQstat(id, s) {
+  const el = document.getElementById('qst-'+id);
+  if (el) { el.className='qi-stat '+s; el.textContent=s; }
+}
+
+// ── UI HELPERS ────────────────────────────────────────────────────────────────
+function selChip(btn, group) {
+  btn.closest('.chip-row').querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  if (group==='tone') tone = btn.textContent;
+}
+
+function togPlat(p, btn) {
+  platforms[p] = !platforms[p];
+  btn.classList.toggle('active', platforms[p]);
+}
+
+function setGenLoading(on) {
+  const btn = document.getElementById('genBtn');
+  const txt = document.getElementById('genTxt');
+  const sp  = document.getElementById('genSp');
+  btn.disabled = on;
+  txt.style.display = on?'none':'block';
+  sp.style.display  = on?'inline-block':'none';
+}
+
+function escH(s) {
+  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+loadCreds();
+</script>
+</body>
+</html>
