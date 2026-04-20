@@ -22,8 +22,6 @@
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'DM Mono',monospace;background:var(--cream);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;overflow:hidden;}
-
-/* ── HEADER ── */
 header{background:var(--ink);color:var(--cream);padding:0.9rem 1.8rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #222;flex-shrink:0;}
 header h1{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;letter-spacing:0.06em;}
 header h1 em{font-style:italic;color:var(--gold);}
@@ -33,8 +31,6 @@ header h1 em{font-style:italic;color:var(--gold);}
 .hbadge.fb{background:var(--fb);color:#fff;}
 .hbadge.ok{background:var(--green);color:#fff;}
 .hbadge.off{background:#333;color:#888;}
-
-/* ── SETUP STRIP ── */
 #setupStrip{background:#161310;padding:0.7rem 1.8rem;display:flex;align-items:center;gap:0.7rem;flex-wrap:wrap;border-bottom:1px solid #2a2520;flex-shrink:0;}
 .sl{font-size:0.52rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);white-space:nowrap;}
 #setupStrip input{background:#2a2520;border:1px solid #3a3530;color:var(--cream);font-family:'DM Mono',monospace;font-size:0.62rem;padding:0.38rem 0.65rem;border-radius:2px;outline:none;flex:1;min-width:110px;}
@@ -42,15 +38,9 @@ header h1 em{font-style:italic;color:var(--gold);}
 #setupStrip input::placeholder{color:#555;}
 .sbtn{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.38rem 0.9rem;border:1px solid var(--gold);background:transparent;color:var(--gold);cursor:pointer;border-radius:2px;white-space:nowrap;transition:all 0.15s;}
 .sbtn:hover{background:var(--gold);color:var(--ink);}
-
-/* ── MAIN LAYOUT ── */
 .app{display:grid;grid-template-columns:270px 1fr 300px;flex:1;overflow:hidden;height:calc(100vh - 96px);}
-
-/* ── LEFT PANEL ── */
 .left{border-right:1px solid var(--border);display:flex;flex-direction:column;background:var(--surface);overflow:hidden;}
 .panel-title{font-size:0.52rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);padding:0.9rem 1.3rem 0.5rem;border-bottom:1px solid var(--border);}
-
-/* Drive section */
 .drive-section{padding:1rem 1.3rem;border-bottom:1px solid var(--border);}
 .drive-label{font-size:0.52rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem;display:block;}
 .drive-input-row{display:flex;gap:0.4rem;}
@@ -59,8 +49,6 @@ header h1 em{font-style:italic;color:var(--gold);}
 .scan-btn{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.08em;text-transform:uppercase;padding:0.42rem 0.7rem;border:1px solid var(--gold);background:transparent;color:var(--gold);cursor:pointer;border-radius:2px;white-space:nowrap;transition:all 0.15s;}
 .scan-btn:hover{background:var(--gold);color:var(--ink);}
 .scan-btn:disabled{opacity:0.4;cursor:not-allowed;}
-
-/* Media grid */
 .media-scroll{flex:1;overflow-y:auto;padding:0.8rem 1rem;}
 .media-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;}
 .media-thumb{border:2px solid var(--border);border-radius:3px;overflow:hidden;cursor:pointer;transition:all 0.15s;position:relative;background:#eee;aspect-ratio:1;}
@@ -71,8 +59,6 @@ header h1 em{font-style:italic;color:var(--gold);}
 .media-thumb .sel-check{position:absolute;top:4px;right:4px;width:16px;height:16px;background:var(--gold);border-radius:50%;display:none;align-items:center;justify-content:center;font-size:0.55rem;color:var(--ink);}
 .media-thumb.selected .sel-check{display:flex;}
 .media-empty{text-align:center;padding:2rem 1rem;color:var(--muted);font-size:0.58rem;line-height:1.8;opacity:0.7;}
-
-/* ── CENTRE ── */
 .centre{display:flex;flex-direction:column;overflow:hidden;background:var(--panel);}
 .centre-top{padding:0.9rem 1.4rem;border-bottom:1px solid var(--border);background:var(--surface);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
 .ct-label{font-size:0.52rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);}
@@ -80,8 +66,6 @@ header h1 em{font-style:italic;color:var(--gold);}
 .ptab{font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.25rem 0.6rem;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;border-radius:2px;transition:all 0.15s;}
 .ptab.ig.active{background:var(--ig);color:#fff;border-color:var(--ig);}
 .ptab.fb.active{background:var(--fb);color:#fff;border-color:var(--fb);}
-
-/* Selected media preview */
 .selected-preview{flex-shrink:0;padding:1rem;border-bottom:1px solid var(--border);background:var(--surface);display:none;}
 .selected-preview.show{display:flex;gap:0.8rem;align-items:flex-start;}
 .sel-thumb{width:72px;height:72px;border-radius:3px;object-fit:cover;border:1px solid var(--border);flex-shrink:0;}
@@ -91,8 +75,6 @@ header h1 em{font-style:italic;color:var(--gold);}
 .analyse-btn{font-family:'DM Mono',monospace;font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.35rem 0.8rem;border:1px solid var(--ink);background:var(--ink);color:var(--cream);cursor:pointer;border-radius:2px;margin-top:0.5rem;display:flex;align-items:center;gap:0.4rem;transition:all 0.15s;white-space:nowrap;}
 .analyse-btn:hover{background:var(--rust);border-color:var(--rust);}
 .analyse-btn:disabled{opacity:0.4;cursor:not-allowed;}
-
-/* Brief */
 .brief-section{padding:0.9rem 1.3rem;border-bottom:1px solid var(--border);background:var(--surface);flex-shrink:0;}
 .brief-row{display:flex;gap:0.5rem;align-items:flex-end;}
 .brief-section textarea{flex:1;font-family:'DM Mono',monospace;font-size:0.65rem;background:var(--cream);border:1px solid var(--border);color:var(--ink);padding:0.5rem 0.7rem;border-radius:2px;resize:none;outline:none;transition:border-color 0.15s;line-height:1.6;}
@@ -100,8 +82,6 @@ header h1 em{font-style:italic;color:var(--gold);}
 .gen-btn{font-family:'Cormorant Garamond',serif;font-size:0.95rem;font-weight:400;letter-spacing:0.08em;padding:0.5rem 1rem;border:none;background:var(--ink);color:var(--cream);cursor:pointer;border-radius:2px;transition:all 0.2s;white-space:nowrap;display:flex;align-items:center;gap:0.4rem;align-self:stretch;}
 .gen-btn:hover{background:var(--rust);}
 .gen-btn:disabled{opacity:0.4;cursor:not-allowed;}
-
-/* Tone + platform row */
 .options-row{padding:0.65rem 1.3rem;border-bottom:1px solid var(--border);background:var(--surface);display:flex;align-items:center;gap:1rem;flex-shrink:0;}
 .chip-row{display:flex;gap:0.3rem;flex-wrap:wrap;}
 .chip{font-family:'DM Mono',monospace;font-size:0.52rem;padding:0.2rem 0.45rem;border:1px solid var(--border);background:var(--cream);color:var(--muted);cursor:pointer;border-radius:2px;transition:all 0.15s;}
@@ -111,8 +91,6 @@ header h1 em{font-style:italic;color:var(--gold);}
 .chip.fb.active{background:var(--fb);border-color:var(--fb);color:#fff;}
 .opt-sep{width:1px;height:20px;background:var(--border);}
 .opt-label{font-size:0.5rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-right:0.2rem;}
-
-/* Phone preview */
 .preview-scroll{flex:1;overflow-y:auto;padding:1.2rem;display:flex;align-items:flex-start;justify-content:center;}
 .phone{width:290px;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 16px 50px rgba(0,0,0,0.14);font-family:-apple-system,sans-serif;}
 .ph-head{padding:0.6rem 0.85rem;display:flex;align-items:center;gap:0.55rem;border-bottom:1px solid #f0f0f0;}
@@ -128,14 +106,10 @@ header h1 em{font-style:italic;color:var(--gold);}
 .empty-ph{display:flex;flex-direction:column;align-items:center;justify-content:center;height:300px;gap:0.6rem;color:var(--muted);opacity:0.45;}
 .empty-ph .ei{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:2rem;color:var(--gold);}
 .empty-ph p{font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;}
-
-/* ── RIGHT PANEL ── */
 .right{border-left:1px solid var(--border);display:flex;flex-direction:column;background:var(--surface);overflow:hidden;}
 .right-head{padding:0.8rem 1.2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
 .rh-title{font-size:0.52rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);}
 .qbadge{background:var(--gold);color:var(--ink);font-size:0.5rem;padding:0.1rem 0.4rem;border-radius:10px;font-weight:600;}
-
-/* Approval card */
 .approval-area{flex-shrink:0;border-bottom:1px solid var(--border);padding:0.9rem 1.1rem;display:none;}
 .approval-area.show{display:block;}
 .approval-title{font-size:0.5rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0.6rem;}
@@ -145,20 +119,15 @@ header h1 em{font-style:italic;color:var(--gold);}
 .ctab.fb.active{color:var(--fb);border-bottom-color:var(--fb);}
 .cap-edit{width:100%;font-family:'DM Mono',monospace;font-size:0.6rem;background:var(--cream);border:1px solid var(--border);color:var(--ink);padding:0.5rem 0.65rem;border-radius:2px;resize:none;outline:none;line-height:1.65;transition:border-color 0.15s;min-height:90px;}
 .cap-edit:focus{border-color:var(--gold);}
-
-/* Time slot */
 .slot-row{display:flex;gap:0.35rem;margin:0.6rem 0;}
 .slot-chip{font-family:'DM Mono',monospace;font-size:0.5rem;padding:0.22rem 0.5rem;border:1px solid var(--border);background:var(--cream);color:var(--muted);cursor:pointer;border-radius:2px;transition:all 0.15s;}
 .slot-chip:hover{border-color:var(--gold);color:var(--gold);}
 .slot-chip.active{background:var(--gold);color:var(--ink);border-color:var(--gold);}
-
 .approval-actions{display:flex;gap:0.4rem;margin-top:0.6rem;}
 .aact{flex:1;font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.08em;text-transform:uppercase;padding:0.4rem;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;border-radius:2px;transition:all 0.15s;}
 .aact.approve{border-color:var(--green);color:var(--green);}
 .aact.approve:hover{background:var(--green);color:#fff;}
 .aact.skip:hover{border-color:var(--rust);color:var(--rust);}
-
-/* Queue list */
 .queue-scroll{flex:1;overflow-y:auto;}
 .queue-empty{padding:1.5rem 1.2rem;text-align:center;color:var(--muted);font-size:0.56rem;opacity:0.6;line-height:1.9;}
 .qi{border-bottom:1px solid var(--border);padding:0.75rem 1.1rem;animation:fadeUp 0.2s ease;}
@@ -181,24 +150,15 @@ header h1 em{font-style:italic;color:var(--gold);}
 .post-btn{width:100%;margin-top:0.45rem;font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.35rem;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;border-radius:2px;transition:all 0.15s;display:flex;align-items:center;justify-content:center;gap:0.35rem;}
 .post-btn:hover:not(:disabled){border-color:var(--green);color:var(--green);}
 .post-btn:disabled{opacity:0.4;cursor:not-allowed;}
-
-/* AI analysis badge */
 .ai-analysis{background:var(--gold-dim);border:1px solid rgba(201,168,76,0.3);border-radius:3px;padding:0.5rem 0.7rem;margin-bottom:0.6rem;font-size:0.58rem;line-height:1.6;color:var(--ink);display:none;}
 .ai-analysis.show{display:block;}
 .ai-analysis .ai-label{font-size:0.45rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:0.3rem;display:block;}
-
-/* Spinner */
 .sp{display:inline-block;width:12px;height:12px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;}
-.sp.dark{border-color:rgba(14,12,10,0.2);border-top-color:var(--ink);}
 @keyframes spin{to{transform:rotate(360deg);}}
-
-/* Cred footer */
 .cred-foot{padding:0.5rem 1.1rem;border-top:1px solid var(--border);display:flex;align-items:center;gap:0.4rem;flex-shrink:0;}
 .cdot{width:6px;height:6px;border-radius:50%;background:#444;}
 .cdot.ok{background:var(--green);}
 .cfoot-label{font-size:0.5rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);}
-
-/* Scrollbar */
 ::-webkit-scrollbar{width:3px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
@@ -220,9 +180,8 @@ header h1 em{font-style:italic;color:var(--gold);}
   <input type="password" id="anthropicKeyInput" placeholder="Anthropic API Key (sk-ant-...)" style="max-width:220px" autocomplete="off">
   <span class="sl" style="margin-left:0.3rem">Meta API</span>
   <input type="text" id="tokenInput" placeholder="Page Access Token" autocomplete="off">
-  <input type="text" id="igTokenInput" placeholder="Instagram Token (from Generate token)" style="max-width:200px" autocomplete="off">
-  <input type="text" id="igIdInput" placeholder="Instagram Account ID" style="max-width:145px">
-  <input type="text" id="fbPageIdInput" placeholder="Facebook Page ID" style="max-width:130px">
+  <input type="text" id="igIdInput" placeholder="Instagram Account ID" style="max-width:160px">
+  <input type="text" id="fbPageIdInput" placeholder="Facebook Page ID" style="max-width:140px">
   <button class="sbtn" onclick="saveCreds()">Save</button>
   <span class="sl" style="margin-left:0.3rem">Google Drive</span>
   <input type="text" id="driveKeyInput" placeholder="Google API Key" style="max-width:160px" autocomplete="off">
@@ -231,7 +190,6 @@ header h1 em{font-style:italic;color:var(--gold);}
 
 <div class="app">
 
-  <!-- ── LEFT: MEDIA BROWSER ── -->
   <div class="left">
     <div class="panel-title">📁 Google Drive Media</div>
     <div class="drive-section">
@@ -243,24 +201,20 @@ header h1 em{font-style:italic;color:var(--gold);}
     </div>
     <div class="media-scroll">
       <div id="mediaGrid" class="media-grid">
-        <div class="media-empty" style="grid-column:1/-1">
-          Paste your Google Drive folder ID above and click Scan to load your photos and videos.
-        </div>
+        <div class="media-empty" style="grid-column:1/-1">Paste your Google Drive folder ID above and click Scan to load your photos and videos.</div>
       </div>
     </div>
   </div>
 
-  <!-- ── CENTRE: COMPOSE + PREVIEW ── -->
   <div class="centre">
     <div class="centre-top">
       <span class="ct-label">Post Preview</span>
       <div class="ptabs">
-        <button class="ptab ig active" onclick="switchPrev(this,'ig')">Instagram</button>
-        <button class="ptab fb" onclick="switchPrev(this,'fb')">Facebook</button>
+        <button class="ptab ig" onclick="switchPrev(this,'ig')">Instagram</button>
+        <button class="ptab fb active" onclick="switchPrev(this,'fb')">Facebook</button>
       </div>
     </div>
 
-    <!-- Selected media info -->
     <div class="selected-preview" id="selPreview">
       <img class="sel-thumb" id="selThumb" src="" alt="">
       <div class="sel-info">
@@ -273,7 +227,6 @@ header h1 em{font-style:italic;color:var(--gold);}
       </div>
     </div>
 
-    <!-- Brief -->
     <div class="brief-section">
       <div class="brief-row">
         <textarea id="brief" rows="2" placeholder="Add a brief — e.g. 'This is from last Saturday's trial class. Promote our June intake, $25 first session.'"></textarea>
@@ -284,7 +237,6 @@ header h1 em{font-style:italic;color:var(--gold);}
       </div>
     </div>
 
-    <!-- Options -->
     <div class="options-row">
       <span class="opt-label">Tone</span>
       <div class="chip-row">
@@ -301,51 +253,40 @@ header h1 em{font-style:italic;color:var(--gold);}
         <button class="chip fb active" onclick="togPlat('fb',this)">👥 FB</button>
       </div>
       <div class="opt-sep"></div>
-      <input type="text" id="schoolName" placeholder="School name" style="font-family:'DM Mono',monospace;font-size:0.6rem;background:var(--cream);border:1px solid var(--border);color:var(--ink);padding:0.3rem 0.6rem;border-radius:2px;outline:none;width:140px;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--border)'">
+      <input type="text" id="schoolName" placeholder="School name" value="Dance Runway Singapore" style="font-family:'DM Mono',monospace;font-size:0.6rem;background:var(--cream);border:1px solid var(--border);color:var(--ink);padding:0.3rem 0.6rem;border-radius:2px;outline:none;width:160px;" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--border)'">
     </div>
 
-    <!-- Phone mockup -->
     <div class="preview-scroll" id="previewScroll">
-      <div class="empty-ph">
-        <div class="ei">✦</div>
-        <p>Select media then generate a post</p>
-      </div>
+      <div class="empty-ph"><div class="ei">✦</div><p>Select media then generate a post</p></div>
     </div>
   </div>
 
-  <!-- ── RIGHT: APPROVAL + QUEUE ── -->
   <div class="right">
     <div class="right-head">
       <span class="rh-title">Approval &amp; Queue</span>
       <span class="qbadge" id="qcount">0</span>
     </div>
 
-    <!-- Approval card -->
     <div class="approval-area" id="approvalArea">
       <div class="approval-title">✦ Review &amp; Approve</div>
-
       <div class="ai-analysis" id="aiAnalysis">
         <span class="ai-label">Claude's read on this image</span>
         <span id="aiAnalysisText"></span>
       </div>
-
       <div class="caption-tabs" id="capTabs"></div>
-      <textarea class="cap-edit" id="igCapEdit" placeholder="Instagram caption..."></textarea>
-      <textarea class="cap-edit" id="fbCapEdit" placeholder="Facebook caption..." style="display:none"></textarea>
-
+      <textarea class="cap-edit" id="igCapEdit" placeholder="Instagram caption..." style="display:none"></textarea>
+      <textarea class="cap-edit" id="fbCapEdit" placeholder="Facebook caption..."></textarea>
       <div class="slot-row">
         <button class="slot-chip active" onclick="selSlot(this,'07:00')">7 AM</button>
         <button class="slot-chip" onclick="selSlot(this,'12:00')">12 PM</button>
         <button class="slot-chip" onclick="selSlot(this,'21:00')">9 PM</button>
       </div>
-
       <div class="approval-actions">
         <button class="aact skip" onclick="skipDraft()">✕ Skip</button>
         <button class="aact approve" onclick="approveToQueue()">✓ Add to Queue</button>
       </div>
     </div>
 
-    <!-- Queue -->
     <div class="queue-scroll" id="queueScroll">
       <div class="queue-empty">Approved posts appear here.<br>Hit Post Now when you're ready.</div>
     </div>
@@ -358,19 +299,25 @@ header h1 em{font-style:italic;color:var(--gold);}
 </div>
 
 <script>
-// ── STATE ────────────────────────────────────────────────────────────────────
-let creds = { anthropicKey:'', token:'', igToken:'', igId:'', fbPageId:'', driveKey:'' };
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let creds = {
+  anthropicKey: '',
+  token: '',
+  igId: '17841408615996738',    // @dancerunwaysg Instagram Account ID
+  fbPageId: '392481167473087', // Dance Runway Singapore Facebook Page ID
+  driveKey: ''
+};
 let tone = 'Warm';
-let platforms = { ig:true, fb:true };
-let selectedMedia = null; // { id, name, thumbUrl, mimeType, isVideo }
-let currentDraft = { ig:'', fb:'', analysis:'' };
+let platforms = { ig: true, fb: true };
+let selectedMedia = null;
+let currentDraft = { ig: '', fb: '', analysis: '' };
 let selectedSlot = '07:00';
-let activeCaptionTab = 'ig';
-let prevPlatform = 'ig';
+let activeCaptionTab = 'fb';
+let prevPlatform = 'fb';
 let queue = [];
 let mediaItems = [];
 
-// ── CREDENTIALS ──────────────────────────────────────────────────────────────
+// ── CREDENTIALS ───────────────────────────────────────────────────────────────
 function extractToken(val) {
   if (!val) return '';
   const llt = val.match(/long_lived_token=([^&\s#]+)/);
@@ -379,69 +326,63 @@ function extractToken(val) {
   if (at) return at[1];
   return val.trim();
 }
+
 function saveCreds() {
   creds.anthropicKey = document.getElementById('anthropicKeyInput').value.trim();
   const rawToken = document.getElementById('tokenInput').value.trim();
   creds.token = extractToken(rawToken);
   document.getElementById('tokenInput').value = creds.token;
-  creds.igToken = document.getElementById('igTokenInput').value.trim();
-  creds.igId  = document.getElementById('igIdInput').value.trim();
-  creds.fbPageId = document.getElementById('fbPageIdInput').value.trim();
+  creds.igId = document.getElementById('igIdInput').value.trim() || '17841408615996738';
+  creds.fbPageId = document.getElementById('fbPageIdInput').value.trim() || '392481167473087';
   creds.driveKey = document.getElementById('driveKeyInput').value.trim();
-  try { localStorage.setItem('dsa_creds', JSON.stringify(creds)); } catch(e){}
+  try { localStorage.setItem('dsa_creds', JSON.stringify(creds)); } catch(e) {}
   updateCredUI();
 }
+
 function loadCreds() {
   try {
     const s = localStorage.getItem('dsa_creds');
-    if (s) {
-      creds = {...creds, ...JSON.parse(s)};
-      document.getElementById('anthropicKeyInput').value = creds.anthropicKey || '';
-      document.getElementById('tokenInput').value = creds.token;
-      document.getElementById('igTokenInput').value = creds.igToken || '';
-      document.getElementById('igIdInput').value = creds.igId;
-      document.getElementById('fbPageIdInput').value = creds.fbPageId;
-      document.getElementById('driveKeyInput').value = creds.driveKey;
-    }
-  } catch(e){}
+    if (s) creds = { ...creds, ...JSON.parse(s) };
+    if (!creds.igId) creds.igId = '17841408615996738';
+    if (!creds.fbPageId) creds.fbPageId = '392481167473087';
+    document.getElementById('anthropicKeyInput').value = creds.anthropicKey || '';
+    document.getElementById('tokenInput').value = creds.token || '';
+    document.getElementById('igIdInput').value = creds.igId;
+    document.getElementById('fbPageIdInput').value = creds.fbPageId;
+    document.getElementById('driveKeyInput').value = creds.driveKey || '';
+  } catch(e) {}
   updateCredUI();
 }
+
 function updateCredUI() {
   const ok = !!creds.token;
-  document.getElementById('cdot').className = 'cdot' + (ok?' ok':'');
-  document.getElementById('cfoot').textContent = ok ? 'Token saved · ready to post' : 'No credentials saved';
+  document.getElementById('cdot').className = 'cdot' + (ok ? ' ok' : '');
+  document.getElementById('cfoot').textContent = ok ? 'Token saved · FB + IG ready' : 'Paste Page Access Token and click Save';
   document.getElementById('connBadge').textContent = ok ? 'Connected' : 'Not Connected';
-  document.getElementById('connBadge').className = 'hbadge ' + (ok?'ok':'off');
+  document.getElementById('connBadge').className = 'hbadge ' + (ok ? 'ok' : 'off');
 }
 
-// ── GOOGLE DRIVE SCAN ────────────────────────────────────────────────────────
+// ── GOOGLE DRIVE ──────────────────────────────────────────────────────────────
 async function scanDrive() {
   const folderId = document.getElementById('folderId').value.trim();
   if (!folderId) { alert('Please paste your Google Drive Folder ID.'); return; }
   if (!creds.driveKey) { alert('Please add your Google API Key in the setup bar.'); return; }
-
   const btn = document.getElementById('scanBtn');
   btn.disabled = true; btn.textContent = '…';
-
   try {
     const q = encodeURIComponent(`'${folderId}' in parents and (mimeType contains 'image/' or mimeType contains 'video/') and trashed=false`);
     const url = `https://www.googleapis.com/drive/v3/files?q=${q}&fields=files(id,name,mimeType,thumbnailLink,webContentLink)&key=${creds.driveKey}&pageSize=50`;
     const res = await fetch(url);
     const data = await res.json();
     if (data.error) throw new Error(data.error.message);
-
     mediaItems = (data.files || []).map(f => ({
-      id: f.id,
-      name: f.name,
-      mimeType: f.mimeType,
+      id: f.id, name: f.name, mimeType: f.mimeType,
       isVideo: f.mimeType.startsWith('video/'),
-      thumbUrl: f.thumbnailLink || null,
-      webUrl: f.webContentLink || null
+      thumbUrl: f.thumbnailLink || null
     }));
-
     renderMediaGrid();
   } catch(e) {
-    alert('Drive scan failed: ' + e.message + '\n\nMake sure:\n1. Your API key has Drive API enabled\n2. The folder is shared publicly (Anyone with link can view)\n3. Folder ID is correct');
+    alert('Drive scan failed: ' + e.message + '\n\nCheck:\n1. API key has Drive API enabled\n2. Folder is shared publicly\n3. Folder ID is correct');
   } finally {
     btn.disabled = false; btn.textContent = 'Scan';
   }
@@ -453,59 +394,46 @@ function renderMediaGrid() {
     grid.innerHTML = '<div class="media-empty" style="grid-column:1/-1">No images or videos found in this folder.</div>';
     return;
   }
-  grid.innerHTML = mediaItems.map((m,i) => `
+  grid.innerHTML = mediaItems.map((m, i) => `
     <div class="media-thumb" id="mt-${i}" onclick="selectMedia(${i})">
-      ${m.thumbUrl
-        ? `<img src="${m.thumbUrl}" alt="${escH(m.name)}" loading="lazy">`
-        : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">${m.isVideo?'🎬':'🖼️'}</div>`
-      }
+      ${m.thumbUrl ? `<img src="${m.thumbUrl}" alt="${escH(m.name)}" loading="lazy">` : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">${m.isVideo ? '🎬' : '🖼️'}</div>`}
       ${m.isVideo ? `<span class="vid-badge">Video</span>` : ''}
       <div class="sel-check">✓</div>
     </div>`).join('');
 }
 
 function selectMedia(i) {
-  const m = mediaItems[i];
-  selectedMedia = m;
-
+  selectedMedia = mediaItems[i];
   document.querySelectorAll('.media-thumb').forEach(t => t.classList.remove('selected'));
   document.getElementById('mt-' + i).classList.add('selected');
-
-  const sp = document.getElementById('selPreview');
-  sp.classList.add('show');
-  document.getElementById('selThumb').src = m.thumbUrl || '';
-  document.getElementById('selThumb').style.display = m.thumbUrl ? 'block' : 'none';
-  document.getElementById('selFilename').textContent = m.name;
-  document.getElementById('selType').textContent = (m.isVideo ? 'Video' : 'Image') + ' · ' + m.mimeType;
+  document.getElementById('selPreview').classList.add('show');
+  document.getElementById('selThumb').src = selectedMedia.thumbUrl || '';
+  document.getElementById('selThumb').style.display = selectedMedia.thumbUrl ? 'block' : 'none';
+  document.getElementById('selFilename').textContent = selectedMedia.name;
+  document.getElementById('selType').textContent = (selectedMedia.isVideo ? 'Video' : 'Image') + ' · ' + selectedMedia.mimeType;
   document.getElementById('genBtn').disabled = false;
 }
 
-// ── ANALYSE + GENERATE ───────────────────────────────────────────────────────
+// ── GENERATE ──────────────────────────────────────────────────────────────────
 async function analyseAndGenerate() {
-  // ── Pre-flight checks ──
   if (!selectedMedia) { alert('Please select a photo or video first.'); return; }
-
   const brief = document.getElementById('brief').value.trim();
   if (!brief) {
     const ta = document.getElementById('brief');
     ta.style.borderColor = 'var(--rust)';
-    setTimeout(() => { ta.style.borderColor = ''; ta.placeholder = "Add a brief — e.g. 'This is from last Saturday's trial class...'"; }, 2000);
     ta.placeholder = '⚠ Please add a brief first';
+    setTimeout(() => { ta.style.borderColor = ''; ta.placeholder = "Add a brief — e.g. 'This is from last Saturday's trial class...'"; }, 2500);
     return;
   }
-
   if (!creds.anthropicKey || !creds.anthropicKey.startsWith('sk-')) {
-    alert('⚠ Anthropic API key missing or invalid.\n\nPaste your key (starts with sk-ant-...) in the setup bar at the top and click Save All.');
+    alert('⚠ Anthropic API key missing.\n\nPaste your key (starts with sk-ant-...) in the setup bar and click Save All.');
     return;
   }
 
   setGenLoading(true);
+  const school = document.getElementById('schoolName')?.value?.trim() || 'Dance Runway Singapore';
+  let imageData = null, imageMime = 'image/jpeg';
 
-  const school = document.getElementById('schoolName')?.value?.trim() || 'our dance studio';
-  let imageData = null;
-  let imageMime = 'image/jpeg';
-
-  // ── Try to load image for vision (silently skip if it fails) ──
   if (!selectedMedia.isVideo && selectedMedia.thumbUrl) {
     try {
       const imgRes = await fetch(selectedMedia.thumbUrl, { mode: 'cors' });
@@ -513,87 +441,48 @@ async function analyseAndGenerate() {
         const blob = await imgRes.blob();
         if (blob.size > 0) {
           imageData = await blobToBase64(blob);
-          imageMime = blob.type && blob.type.startsWith('image/') ? blob.type : 'image/jpeg';
+          imageMime = blob.type?.startsWith('image/') ? blob.type : 'image/jpeg';
         }
       }
-    } catch(e) {
-      // Vision not available — fall back to text-only prompt, no error shown
-    }
+    } catch(e) {}
   }
 
-  // ── Build messages ──
-  let messages;
-  if (imageData) {
-    messages = [{
-      role: 'user',
-      content: [
+  const messages = imageData
+    ? [{ role: 'user', content: [
         { type: 'image', source: { type: 'base64', media_type: imageMime, data: imageData } },
         { type: 'text', text: buildPrompt(brief, school, true) }
-      ]
-    }];
-  } else {
-    messages = [{ role: 'user', content: buildPrompt(brief, school, false, selectedMedia.name, selectedMedia.isVideo) }];
-  }
+      ]}]
+    : [{ role: 'user', content: buildPrompt(brief, school, false, selectedMedia.name, selectedMedia.isVideo) }];
 
-  // ── Call API ──
   try {
-    let res;
-    try {
-      res = await fetch('https://api.anthropic.com/v1/messages', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': creds.anthropicKey,
-          'anthropic-version': '2023-06-01',
-          'anthropic-dangerous-direct-browser-access': 'true'
-        },
-        body: JSON.stringify({ model: 'claude-haiku-4-5', max_tokens: 1500, messages })
-      });
-    } catch(fetchErr) {
-      throw new Error('Network error — check your internet connection and try again.');
-    }
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': creds.anthropicKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({ model: 'claude-haiku-4-5', max_tokens: 1500, messages })
+    });
 
-    let data;
-    try {
-      data = await res.json();
-    } catch(jsonErr) {
-      throw new Error('Could not read API response. Please try again.');
-    }
-
-    // ── Handle API-level errors ──
+    const data = await res.json();
     if (data.error) {
-      const msg = data.error.message || 'Unknown API error';
-      if (msg.includes('credit') || msg.includes('balance')) {
-        throw new Error('Insufficient credits. Go to console.anthropic.com → Billing and add credits.');
-      } else if (msg.includes('invalid x-api-key') || msg.includes('authentication')) {
-        throw new Error('Invalid API key. Re-paste your key in the setup bar and click Save All.');
-      } else {
-        throw new Error(msg);
-      }
+      const msg = data.error.message || '';
+      if (msg.includes('credit') || msg.includes('balance')) throw new Error('Insufficient Anthropic credits. Go to console.anthropic.com → Billing.');
+      if (msg.includes('invalid x-api-key') || msg.includes('authentication')) throw new Error('Invalid API key. Re-paste and click Save All.');
+      throw new Error(msg);
     }
 
-    // ── Parse response ──
     let text = '';
-    if (data.content && Array.isArray(data.content)) {
-      for (const block of data.content) {
-        if (block.type === 'text') { text = block.text; break; }
-      }
-    }
-    if (!text) throw new Error('Empty response from API. Please try again.');
+    for (const block of (data.content || [])) { if (block.type === 'text') { text = block.text; break; } }
+    if (!text) throw new Error('Empty response. Please try again.');
 
-    // Strip markdown fences and find JSON
-    text = text.replace(/^```json\s*/im,'').replace(/^```\s*/m,'').replace(/```\s*$/m,'').trim();
+    text = text.replace(/^```json\s*/im, '').replace(/^```\s*/m, '').replace(/```\s*$/m, '').trim();
     const jsonMatch = text.match(/\{[\s\S]*\}/);
     if (!jsonMatch) throw new Error('Caption generation failed — please try again.');
 
-    let parsed;
-    try {
-      parsed = JSON.parse(jsonMatch[0]);
-    } catch(parseErr) {
-      throw new Error('Caption format error — please try again.');
-    }
-
-    // ── Validate parsed output ──
+    const parsed = JSON.parse(jsonMatch[0]);
     if (!parsed.ig && !parsed.fb) throw new Error('No captions returned — please try again.');
 
     currentDraft = {
@@ -604,7 +493,6 @@ async function analyseAndGenerate() {
 
     renderPreview();
     showApproval();
-
   } catch(e) {
     alert('❌ ' + (e.message || 'Something went wrong. Please try again.'));
   } finally {
@@ -613,75 +501,44 @@ async function analyseAndGenerate() {
 }
 
 function buildPrompt(brief, school, hasImage, filename, isVideo) {
-  const mediaContext = hasImage
-    ? 'I am showing you an image from our dance school.'
-    : isVideo
-      ? `This post is for a video called "${filename}" from our dance school. Imagine dynamic movement and energy.`
-      : `This post is for a photo called "${filename}" from our dance school.`;
-
-  return `You are a social media manager for a dance school called "${school}".
-${mediaContext}
-
-Campaign brief: ${brief}
+  const ctx = hasImage ? 'I am showing you an image from our dance school.'
+    : isVideo ? `This post is for a video called "${filename}" from our dance school.`
+    : `This post is for a photo called "${filename}" from our dance school.`;
+  return `You are a social media manager for "${school}", a dance school in Singapore.
+${ctx}
+Brief: ${brief}
 Tone: ${tone}
 Audience: Parents and families in Singapore
-
-${hasImage ? 'First, briefly describe what you see in the image (1-2 sentences). Then write the posts.' : ''}
-
-Return ONLY valid JSON (no preamble, no markdown backticks):
+${hasImage ? 'First describe the image in 1-2 sentences, then write both posts.' : ''}
+Return ONLY valid JSON (no preamble, no markdown):
 {
-  "analysis": "${hasImage ? 'Your 1-2 sentence description of the image' : ''}",
-  "ig": {
-    "caption": "Instagram caption with emojis and line breaks, 80-150 words, strong CTA",
-    "hashtags": "#dance #danceschool #singapore #kidsactivities #dancekids #ballet"
-  },
-  "fb": {
-    "caption": "Facebook post, warmer, 100-200 words, parent-focused CTA, emojis",
-    "hashtags": "#dance #danceschool #singapore #kidsactivities"
-  }
+  "analysis": "${hasImage ? 'Your 1-2 sentence image description' : ''}",
+  "ig": { "caption": "Instagram caption with emojis, 80-150 words, strong CTA", "hashtags": "#dance #danceschool #singapore #kidsactivities #dancerunway #ballet" },
+  "fb": { "caption": "Facebook post, warm and parent-focused, 100-200 words, emojis, CTA", "hashtags": "#dance #danceschool #singapore #kidsactivities #dancerunway" }
 }`;
 }
 
 function blobToBase64(blob) {
-  return new Promise((res, rej) => {
-    const r = new FileReader();
-    r.onload = () => res(r.result.split(',')[1]);
-    r.onerror = rej;
-    r.readAsDataURL(blob);
-  });
+  return new Promise((res, rej) => { const r = new FileReader(); r.onload = () => res(r.result.split(',')[1]); r.onerror = rej; r.readAsDataURL(blob); });
 }
 
-// ── PREVIEW ──────────────────────────────────────────────────────────────────
+// ── PREVIEW ───────────────────────────────────────────────────────────────────
 function renderPreview() {
-  const area = document.getElementById('previewScroll');
-  const text = currentDraft[prevPlatform] || '';
+  const text = currentDraft[prevPlatform] || currentDraft.fb || '';
   const parts = text.split('\n\n');
-  const hashtags = parts[parts.length-1];
-  const caption = parts.slice(0,-1).join('\n\n');
-  const school = 'Dance Studio';
-  const initial = school.charAt(0);
+  const hashtags = parts[parts.length - 1];
+  const caption = parts.slice(0, -1).join('\n\n');
+  const school = document.getElementById('schoolName')?.value?.trim() || 'Dance Runway SG';
   const isIg = prevPlatform === 'ig';
-  const slotMap = {'07:00':'7:00 AM','12:00':'12:00 PM','21:00':'9:00 PM'};
-
-  area.innerHTML = `
+  const slotMap = { '07:00': '7:00 AM', '12:00': '12:00 PM', '21:00': '9:00 PM' };
+  document.getElementById('previewScroll').innerHTML = `
     <div class="phone">
       <div class="ph-head">
-        <div class="ph-avatar ${isIg?'':'fb'}">${initial}</div>
-        <div>
-          <div class="ph-name">${school}</div>
-          <span class="ph-sub">Queued · ${slotMap[selectedSlot]} SGT</span>
-        </div>
+        <div class="ph-avatar ${isIg ? '' : 'fb'}">${school.charAt(0)}</div>
+        <div><div class="ph-name">${school}</div><span class="ph-sub">Queued · ${slotMap[selectedSlot]} SGT</span></div>
       </div>
-      ${selectedMedia?.thumbUrl && !selectedMedia.isVideo
-        ? `<img class="ph-img" src="${selectedMedia.thumbUrl}" alt="">`
-        : selectedMedia?.isVideo
-          ? `<div class="ph-img-placeholder">🎬<br>Video post</div>`
-          : `<div class="ph-img-placeholder">📸<br>No image selected</div>`
-      }
-      <div class="ph-body">
-        <div class="ph-caption">${escH(caption)}</div>
-        <div class="ph-tags">${escH(hashtags)}</div>
-      </div>
+      ${selectedMedia?.thumbUrl && !selectedMedia.isVideo ? `<img class="ph-img" src="${selectedMedia.thumbUrl}" alt="">` : selectedMedia?.isVideo ? `<div class="ph-img-placeholder">🎬<br>Video post</div>` : `<div class="ph-img-placeholder">📸<br>No image selected</div>`}
+      <div class="ph-body"><div class="ph-caption">${escH(caption)}</div><div class="ph-tags">${escH(hashtags)}</div></div>
     </div>`;
 }
 
@@ -692,20 +549,12 @@ function switchPrev(btn, plat) {
   if (currentDraft.ig || currentDraft.fb) renderPreview();
 }
 
-// ── APPROVAL ─────────────────────────────────────────────────────────────────
+// ── APPROVAL ──────────────────────────────────────────────────────────────────
 function showApproval() {
-  const area = document.getElementById('approvalArea');
-  area.classList.add('show');
-
-  // AI analysis
+  document.getElementById('approvalArea').classList.add('show');
   const analysisEl = document.getElementById('aiAnalysis');
-  if (currentDraft.analysis) {
-    analysisEl.classList.add('show');
-    document.getElementById('aiAnalysisText').textContent = currentDraft.analysis;
-  } else {
-    analysisEl.classList.remove('show');
-  }
-
+  if (currentDraft.analysis) { analysisEl.classList.add('show'); document.getElementById('aiAnalysisText').textContent = currentDraft.analysis; }
+  else analysisEl.classList.remove('show');
   document.getElementById('igCapEdit').value = currentDraft.ig;
   document.getElementById('fbCapEdit').value = currentDraft.fb;
   buildCapTabs();
@@ -714,21 +563,15 @@ function showApproval() {
 function buildCapTabs() {
   const tabs = document.getElementById('capTabs');
   tabs.innerHTML = '';
-  if (platforms.ig) {
+  ['ig', 'fb'].forEach(p => {
+    if (!platforms[p]) return;
     const b = document.createElement('button');
-    b.className = 'ctab ig' + (activeCaptionTab==='ig'?' active':'');
-    b.textContent = 'Instagram';
-    b.onclick = () => switchCapTab('ig');
+    b.className = `ctab ${p}`;
+    b.textContent = p === 'ig' ? 'Instagram' : 'Facebook';
+    b.onclick = () => switchCapTab(p);
     tabs.appendChild(b);
-  }
-  if (platforms.fb) {
-    const b = document.createElement('button');
-    b.className = 'ctab fb' + (activeCaptionTab==='fb'?' active':'');
-    b.textContent = 'Facebook';
-    b.onclick = () => switchCapTab('fb');
-    tabs.appendChild(b);
-  }
-  switchCapTab(activeCaptionTab);
+  });
+  switchCapTab(platforms.fb ? 'fb' : 'ig');
 }
 
 function switchCapTab(plat) {
@@ -736,8 +579,8 @@ function switchCapTab(plat) {
   document.querySelectorAll('.ctab').forEach(t => t.classList.remove('active'));
   const a = document.querySelector('.ctab.' + plat);
   if (a) a.classList.add('active');
-  document.getElementById('igCapEdit').style.display = plat==='ig'?'block':'none';
-  document.getElementById('fbCapEdit').style.display = plat==='fb'?'block':'none';
+  document.getElementById('igCapEdit').style.display = plat === 'ig' ? 'block' : 'none';
+  document.getElementById('fbCapEdit').style.display = plat === 'fb' ? 'block' : 'none';
 }
 
 function selSlot(btn, time) {
@@ -748,7 +591,7 @@ function selSlot(btn, time) {
 }
 
 function skipDraft() {
-  currentDraft = { ig:'', fb:'', analysis:'' };
+  currentDraft = { ig: '', fb: '', analysis: '' };
   document.getElementById('approvalArea').classList.remove('show');
   document.getElementById('previewScroll').innerHTML = `<div class="empty-ph"><div class="ei">✦</div><p>Select media then generate a post</p></div>`;
 }
@@ -757,57 +600,45 @@ function approveToQueue() {
   const igText = document.getElementById('igCapEdit').value.trim();
   const fbText = document.getElementById('fbCapEdit').value.trim();
   if (!igText && !fbText) return;
-
-  const slotMap = {'07:00':'7:00 AM','12:00':'12:00 PM','21:00':'9:00 PM'};
+  const slotMap = { '07:00': '7:00 AM', '12:00': '12:00 PM', '21:00': '9:00 PM' };
   queue.push({
     id: Date.now(),
     ig: platforms.ig ? igText : '',
     fb: platforms.fb ? fbText : '',
-    slot: selectedSlot,
-    slotLabel: slotMap[selectedSlot],
+    slot: selectedSlot, slotLabel: slotMap[selectedSlot],
     status: 'queued',
     thumbUrl: selectedMedia?.thumbUrl || null,
     mediaId: selectedMedia?.id || null,
     isVideo: selectedMedia?.isVideo || false
   });
-
   renderQueue();
   document.getElementById('approvalArea').classList.remove('show');
-  currentDraft = { ig:'', fb:'', analysis:'' };
+  currentDraft = { ig: '', fb: '', analysis: '' };
 }
 
 // ── QUEUE ─────────────────────────────────────────────────────────────────────
 function renderQueue() {
   const scroll = document.getElementById('queueScroll');
   document.getElementById('qcount').textContent = queue.length;
-  if (!queue.length) {
-    scroll.innerHTML = '<div class="queue-empty">Approved posts appear here.<br>Hit Post Now when you\'re ready.</div>';
-    return;
-  }
+  if (!queue.length) { scroll.innerHTML = '<div class="queue-empty">Approved posts appear here.<br>Hit Post Now when you\'re ready.</div>'; return; }
   scroll.innerHTML = queue.map(item => `
     <div class="qi" id="qi-${item.id}">
       <div class="qi-top">
-        <div class="qi-plats">
-          ${item.ig?'<span class="qip ig">IG</span>':''}
-          ${item.fb?'<span class="qip fb">FB</span>':''}
-        </div>
+        <div class="qi-plats">${item.ig ? '<span class="qip ig">IG</span>' : ''}${item.fb ? '<span class="qip fb">FB</span>' : ''}</div>
         <button class="qi-del" onclick="removeQ(${item.id})">✕</button>
       </div>
-      <div class="qi-cap">${escH((item.ig||item.fb).substring(0,120))}${(item.ig||item.fb).length>120?'…':''}</div>
+      <div class="qi-cap">${escH((item.fb || item.ig).substring(0, 120))}${(item.fb || item.ig).length > 120 ? '…' : ''}</div>
       <div class="qi-meta">
         <span class="qi-time">⏰ ${item.slotLabel} SGT</span>
         <span class="qi-stat ${item.status}" id="qst-${item.id}">${item.status}</span>
       </div>
-      <button class="post-btn" id="pb-${item.id}" onclick="postNow(${item.id})" ${item.status==='posted'?'disabled':''}>
-        <span id="pbt-${item.id}">${item.status==='posted'?'✓ Posted':'▶ Post Now'}</span>
+      <button class="post-btn" id="pb-${item.id}" onclick="postNow(${item.id})" ${item.status === 'posted' ? 'disabled' : ''}>
+        <span id="pbt-${item.id}">${item.status === 'posted' ? '✓ Posted' : '▶ Post Now'}</span>
       </button>
     </div>`).join('');
 }
 
-function removeQ(id) {
-  queue = queue.filter(q => q.id !== id);
-  renderQueue();
-}
+function removeQ(id) { queue = queue.filter(q => q.id !== id); renderQueue(); }
 
 // ── POST ──────────────────────────────────────────────────────────────────────
 async function postNow(id) {
@@ -815,19 +646,20 @@ async function postNow(id) {
   const item = queue.find(q => q.id === id);
   if (!item) return;
 
-  const pb = document.getElementById('pb-'+id);
-  const pt = document.getElementById('pbt-'+id);
+  const pb = document.getElementById('pb-' + id);
+  const pt = document.getElementById('pbt-' + id);
   if (pb) pb.disabled = true;
   if (pt) pt.textContent = 'Posting…';
   setQstat(id, 'posting');
 
   const errors = [];
 
-  // FACEBOOK
+  // ── FACEBOOK ──
   if (item.fb && creds.fbPageId) {
     try {
-      const r = await fetch(`https://graph.facebook.com/v19.0/${creds.fbPageId}/feed`, {
-        method:'POST', headers:{'Content-Type':'application/json'},
+      const r = await fetch(`https://graph.facebook.com/v25.0/${creds.fbPageId}/feed`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: item.fb, access_token: creds.token })
       });
       const d = await r.json();
@@ -835,60 +667,43 @@ async function postNow(id) {
     } catch(e) { errors.push('Facebook: ' + e.message); }
   }
 
-  // INSTAGRAM
+  // ── INSTAGRAM ──
   if (item.ig && creds.igId) {
     try {
-      const igTok = creds.igToken || creds.token;
-      if (!igTok) throw new Error('No Instagram token saved. Add it in the setup bar.');
+      if (!item.mediaId) throw new Error('No image selected. Instagram requires a photo.');
+      const imageUrl = `https://drive.google.com/uc?export=view&id=${item.mediaId}`;
 
-      // Build image URL from Google Drive (must be publicly accessible)
-      const imageUrl = item.mediaId
-        ? `https://drive.google.com/uc?export=view&id=${item.mediaId}`
-        : null;
-
-      if (!imageUrl) throw new Error('No image URL available. Instagram requires a photo or video.');
-
-      // Step 1: Create media container
-      const containerBody = {
-        caption: item.ig,
-        image_url: imageUrl,
-        access_token: igTok
-      };
-      // Always use graph.facebook.com (CORS-safe) with the Facebook page token
-      const igTokToUse = creds.token; // Must be Facebook Page token, not Instagram token
-
-      const cRes = await fetch(`https://graph.facebook.com/v21.0/${creds.igId}/media`, {
+      // Step 1: Create container
+      const cRes = await fetch(`https://graph.facebook.com/v25.0/${creds.igId}/media`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...containerBody, access_token: igTokToUse })
+        body: JSON.stringify({ image_url: imageUrl, caption: item.ig, access_token: creds.token })
       });
       const c = await cRes.json();
-      if (c.error) throw new Error(`Container error: ${c.error.message}`);
-      if (!c.id) throw new Error('No container ID returned from Instagram.');
+      if (c.error) throw new Error('Container: ' + c.error.message);
+      if (!c.id) throw new Error('No container ID returned.');
 
-      // Step 2: Wait briefly for Instagram to process
-      await new Promise(r => setTimeout(r, 3000));
+      // Step 2: Wait for processing
+      await new Promise(r => setTimeout(r, 4000));
 
-      // Step 3: Publish the container
-      const pRes = await fetch(`https://graph.facebook.com/v21.0/${creds.igId}/media_publish`, {
+      // Step 3: Publish
+      const pRes = await fetch(`https://graph.facebook.com/v25.0/${creds.igId}/media_publish`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ creation_id: c.id, access_token: igTokToUse })
+        body: JSON.stringify({ creation_id: c.id, access_token: creds.token })
       });
       const p = await pRes.json();
-      if (p.error) throw new Error(`Publish error: ${p.error.message}`);
-    } catch(e) {
-      errors.push('Instagram: ' + (e.message || 'Unknown error'));
-    }
+      if (p.error) throw new Error('Publish: ' + p.error.message);
+    } catch(e) { errors.push('Instagram: ' + e.message); }
   }
 
   if (errors.length) {
     setQstat(id, 'failed');
     if (pb) pb.disabled = false;
     if (pt) pt.textContent = '↺ Retry';
-    alert('⚠️ Post error:\n\n' + errors.join('\n\n'));
     const qi = queue.find(q => q.id === id);
     if (qi) qi.status = 'failed';
+    alert('⚠️ Post error:\n\n' + errors.join('\n\n'));
   } else {
     setQstat(id, 'posted');
     if (pt) pt.textContent = '✓ Posted';
@@ -897,35 +712,21 @@ async function postNow(id) {
   }
 }
 
-function setQstat(id, s) {
-  const el = document.getElementById('qst-'+id);
-  if (el) { el.className='qi-stat '+s; el.textContent=s; }
-}
+function setQstat(id, s) { const el = document.getElementById('qst-' + id); if (el) { el.className = 'qi-stat ' + s; el.textContent = s; } }
 
 // ── UI HELPERS ────────────────────────────────────────────────────────────────
 function selChip(btn, group) {
   btn.closest('.chip-row').querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
   btn.classList.add('active');
-  if (group==='tone') tone = btn.textContent;
+  if (group === 'tone') tone = btn.textContent;
 }
-
-function togPlat(p, btn) {
-  platforms[p] = !platforms[p];
-  btn.classList.toggle('active', platforms[p]);
-}
-
+function togPlat(p, btn) { platforms[p] = !platforms[p]; btn.classList.toggle('active', platforms[p]); }
 function setGenLoading(on) {
-  const btn = document.getElementById('genBtn');
-  const txt = document.getElementById('genTxt');
-  const sp  = document.getElementById('genSp');
-  btn.disabled = on;
-  txt.style.display = on?'none':'block';
-  sp.style.display  = on?'inline-block':'none';
+  document.getElementById('genBtn').disabled = on;
+  document.getElementById('genTxt').style.display = on ? 'none' : 'block';
+  document.getElementById('genSp').style.display = on ? 'inline-block' : 'none';
 }
-
-function escH(s) {
-  return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
-}
+function escH(s) { return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>'); }
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
 loadCreds();
