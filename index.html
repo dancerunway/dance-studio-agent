@@ -362,7 +362,7 @@ header h1 em{font-style:italic;color:var(--gold);}
 <script>
 // ── STATE ────────────────────────────────────────────────────────────────────
 const DEFAULT_FOLDER_ID = '1dClA3tdmmXklY83gMKm7T86Kl-zSff9-';
-const DEFAULT_GOOGLE_KEY = 'AIzaSyCTN1_TpCxR75uxhMGMBdwenA8HVjWwu-s';
+const DEFAULT_GOOGLE_KEY = '';
 const SCHOOL = () => document.getElementById('schoolName').value.trim() || 'Dance Runway SG';
 
 let creds = { anthropicKey: '', googleKey: DEFAULT_GOOGLE_KEY };
@@ -524,7 +524,7 @@ async function generateAI() {
   const fullPrompt = `Dance school marketing photo: ${prompt}. Style: ${styleDesc[aiStyle]}. Singapore context. Suitable for Instagram and Facebook. Professional quality.`;
 
   try {
-    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image-preview:generateContent?key=${creds.googleKey}`, {
+    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-image-generation:generateContent?key=${creds.googleKey}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
